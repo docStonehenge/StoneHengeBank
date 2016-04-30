@@ -15,9 +15,11 @@ module StonehengeBank
 
       def transformed_rate
         if monthly_to_annually?
-          (((1 + interest_rate)**12 - 1) * 100.0).round(2)
+          set_rate_based_on(12)
         elsif monthly_to_half_year?
-          (((1 + interest_rate)**6 - 1) * 100.0).round(2)
+          set_rate_based_on(6)
+        elsif monthly_to_quarterly?
+          set_rate_based_on(3)
         end
       end
 
@@ -29,6 +31,14 @@ module StonehengeBank
 
       def monthly_to_half_year?
         @interest_rate =~ /(month|a\.m\.)/ && @period =~ /semester/
+      end
+
+      def monthly_to_quarterly?
+        @interest_rate =~ /(month|a\.m\.)/ && @period =~ /quarter/
+      end
+
+      def set_rate_based_on(quantity)
+        (((1 + interest_rate)**quantity - 1) * 100.0).round(2)
       end
     end
   end
