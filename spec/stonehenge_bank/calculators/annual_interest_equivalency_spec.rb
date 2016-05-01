@@ -20,7 +20,7 @@ module StonehengeBank
           @annually = false
           expect(interest_rate).to receive(:monthly?).and_return(true)
 
-          expect(subject.transformed_rate).to eql(7.44)
+          expect(subject.transformed_rate).to eql(0.07442)
         end
 
         specify 'when interest rate period is semiannually' do
@@ -28,7 +28,7 @@ module StonehengeBank
           expect(interest_rate).to receive(:monthly?).and_return(false)
           expect(interest_rate).to receive(:semiannually?).and_return(true)
 
-          expect(subject.transformed_rate).to eql(1.20)
+          expect(subject.transformed_rate).to eql 0.01204
         end
 
         specify 'when interest rate period is quarterly' do
@@ -37,7 +37,7 @@ module StonehengeBank
           expect(interest_rate).to receive(:semiannually?).and_return(false)
           expect(interest_rate).to receive(:quarterly?).and_return(true)
 
-          expect(subject.transformed_rate).to eql(2.42)
+          expect(subject.transformed_rate).to eql(0.02422)
         end
 
         specify 'when interest rate period is annually' do

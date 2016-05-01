@@ -12,7 +12,7 @@ module StonehengeBank
       private
 
       def calculate_rate(rate_power)
-        (((1 + @interest_rate.value)**rate_power - 1) * 100.0).round(2)
+        ((1 + @interest_rate.value)**rate_power - 1).round(5)
       end
     end
   end
