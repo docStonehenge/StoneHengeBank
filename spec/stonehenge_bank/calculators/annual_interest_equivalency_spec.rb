@@ -5,7 +5,7 @@ module StonehengeBank
     describe AnnualInterestEquivalency do
       let(:interest_rate) { double(:interest_rate, value: 0.006) }
 
-      subject { described_class.new(interest_rate, for_period: 2) }
+      subject { described_class.new(interest_rate) }
 
       context 'as subclass of InterestEquivalency' do
         it { is_expected.to respond_to :transformed_rate }

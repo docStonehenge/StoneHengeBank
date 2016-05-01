@@ -8,11 +8,7 @@ module StonehengeBank
 
     def method_missing(method_name)
       if matches_real_period? method_name
-        self.class.class_eval do
-          define_method method_name do
-            instance_variable_get(:@period) =~ /#{method_name.to_s.chomp('?')}/
-          end
-        end
+        @period.start_with? method_name.to_s.chomp('?')
       else
         super
       end

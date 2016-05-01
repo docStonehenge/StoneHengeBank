@@ -5,7 +5,7 @@ module StonehengeBank
     class AnnualInterestEquivalency < InterestEquivalency
       def transformed_rate
         @interest_rate.annually? ?
-          @interest_rate.value : calculate_rate!(equivalent_rate_power)
+          @interest_rate.value : calculate_rate(equivalent_rate_power)
       end
 
       private

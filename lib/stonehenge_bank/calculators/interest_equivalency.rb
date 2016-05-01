@@ -1,21 +1,18 @@
 module StonehengeBank
   module Calculators
     class InterestEquivalency
-      attr_reader :period
-
-      def initialize(interest_rate, for_period:)
-        @interest_rate, @period = interest_rate, for_period
+      def initialize(interest_rate)
+        @interest_rate = interest_rate
       end
 
       def transformed_rate
-        raise NotImplementedError,
-              'Subclasses must set #calculate_rate! with their own values and call here.'
+        raise NotImplementedError, 'Subclasses must provide their values.'
       end
 
       private
 
-      def calculate_rate!(quantity)
-        (((1 + @interest_rate.value)**quantity - 1) * 100.0).round(2)
+      def calculate_rate(rate_power)
+        (((1 + @interest_rate.value)**rate_power - 1) * 100.0).round(2)
       end
     end
   end
