@@ -9,7 +9,7 @@ module StonehengeBank
         it 'returns a new interest rate with value and period' do
           result = subject.construct_interest_rate
 
-          expect(result).to be_an_instance_of StonehengeBank::InterestRate
+          expect(result).to be_an_instance_of Resources::InterestRate
           expect(result.value).to eql(0.06)
           expect(result.period).to eql('monthly')
         end

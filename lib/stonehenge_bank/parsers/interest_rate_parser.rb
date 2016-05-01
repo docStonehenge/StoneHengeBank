@@ -1,4 +1,4 @@
-require 'stonehenge_bank/interest_rate'
+require 'stonehenge_bank/resources/interest_rate'
 
 module StonehengeBank
   module Parsers
@@ -8,7 +8,7 @@ module StonehengeBank
       end
 
       def construct_interest_rate
-        StonehengeBank::InterestRate.new(rate_value, @rate[1])
+        Resources::InterestRate.new(rate_value, @rate[1])
       end
 
       private
