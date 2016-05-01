@@ -10,5 +10,11 @@ require "stonehenge_bank"
 # require "pry"
 # Pry.start
 
+require "stonehenge_bank/interest_rate"
+require "stonehenge_bank/investment"
+require "stonehenge_bank/calculators/interest_equivalency"
+require "stonehenge_bank/calculators/annual_interest_equivalency"
+require "stonehenge_bank/parsers/interest_rate_parser"
+
 require "irb"
 IRB.start
