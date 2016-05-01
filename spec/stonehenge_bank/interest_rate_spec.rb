@@ -39,6 +39,12 @@ module StonehengeBank
         expect(subject.semiannually?).to be_truthy
       end
 
+      it 'returns true if interest is in years' do
+        @period = 'annually'
+
+        expect(subject.annually?).to be_truthy
+      end
+
       it 'raises an exception if unknown periods are set' do
         @period = 'foo'
 

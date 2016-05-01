@@ -21,7 +21,7 @@ module StonehengeBank
     private
 
     def matches_real_period?(period)
-      period =~ /year|daily|month|semiannual|quarter/
+      period =~ /annual|daily|month|semiannual|quarter/
     end
   end
 end
