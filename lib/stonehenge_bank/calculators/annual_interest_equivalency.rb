@@ -5,19 +5,13 @@ module StonehengeBank
     class AnnualInterestEquivalency < InterestEquivalency
       def transformed_rate
         @interest_rate.annually? ?
-          @interest_rate.value : calculate_rate(equivalent_rate_power)
+          @interest_rate.value : calculate_rate
       end
 
-      private
-
       def equivalent_rate_power
-        if @interest_rate.monthly?
-          12
-        elsif @interest_rate.semiannually?
-          2
-        elsif @interest_rate.quarterly?
-          4
-        end
+        return 12 if @interest_rate.monthly?
+        return 4 if @interest_rate.quarterly?
+        return 2 if @interest_rate.semiannually?
       end
     end
   end
