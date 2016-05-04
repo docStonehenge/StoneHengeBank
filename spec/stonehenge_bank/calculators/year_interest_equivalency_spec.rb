@@ -31,6 +31,15 @@ module StonehengeBank
 
           expect(subject.equivalent_rate_power).to eql 2
         end
+
+        it 'returns the equivalent power for daily period' do
+          allow(interest_rate).to receive(:monthly?).and_return false
+          allow(interest_rate).to receive(:quarterly?).and_return false
+          allow(interest_rate).to receive(:semiannually?).and_return false
+          allow(interest_rate).to receive(:daily?).and_return true
+
+          expect(subject.equivalent_rate_power).to eql 360
+        end
       end
 
       describe '#transformed_rate' do
@@ -38,11 +47,18 @@ module StonehengeBank
           allow(interest_rate).to receive(:annually?).and_return(@annually)
         end
 
+        specify 'when interest rate period is daily' do
+          @annually = false
+          expect(subject).to receive(:equivalent_rate_power).and_return 360
+
+          expect(subject.transformed_rate).to eql 7.61535
+        end
+
         specify 'when interest rate period is monthly' do
           @annually = false
           expect(subject).to receive(:equivalent_rate_power).and_return 12
 
-          expect(subject.transformed_rate).to eql(0.07442)
+          expect(subject.transformed_rate).to eql 0.07442
         end
 
         specify 'when interest rate period is semiannually' do
@@ -56,14 +72,14 @@ module StonehengeBank
           @annually = false
           expect(subject).to receive(:equivalent_rate_power).and_return 4
 
-          expect(subject.transformed_rate).to eql(0.02422)
+          expect(subject.transformed_rate).to eql 0.02422
         end
 
         specify 'when interest rate period is annually' do
           expect(interest_rate).to receive(:annually?).and_return(true)
           expect(subject).not_to receive(:equivalent_rate_power)
 
-          expect(subject.transformed_rate).to eql(0.006)
+          expect(subject.transformed_rate).to eql 0.006
         end
       end
     end

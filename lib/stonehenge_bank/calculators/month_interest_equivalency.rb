@@ -13,6 +13,7 @@ module StonehengeBank
         return (1.0/12) if @interest_rate.annually?
         return (1.0/6) if @interest_rate.semiannually?
         return (1.0/3) if @interest_rate.quarterly?
+        return 30 if @interest_rate.daily?
       end
     end
   end

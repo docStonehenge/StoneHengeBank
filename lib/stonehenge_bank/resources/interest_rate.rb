@@ -9,7 +9,7 @@ module StonehengeBank
 
       def method_missing(method_name)
         if matches_real_period? method_name
-          @period.start_with? method_name.to_s.chomp('?')
+          period.start_with? method_name.to_s.chomp('?')
         else
           super
         end
@@ -17,8 +17,8 @@ module StonehengeBank
 
       private
 
-      def matches_real_period?(period)
-        period =~ /annual|daily|month|semiannual|quarter/
+      def matches_real_period?(period_method)
+        period_method =~ /annual|daily|month|semiannual|quarter/
       end
     end
   end
