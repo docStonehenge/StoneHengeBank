@@ -1,6 +1,6 @@
 module StonehengeBank
   module Calculators
-    describe AnnualInterestEquivalency do
+    describe YearInterestEquivalency do
       let(:interest_rate) { double(:interest_rate, value: 0.006) }
 
       subject { described_class.new(interest_rate) }

@@ -1,6 +1,6 @@
 module StonehengeBank
   module Calculators
-    class AnnualInterestEquivalency < InterestEquivalency
+    class YearInterestEquivalency < InterestEquivalency
       def transformed_rate
         @interest_rate.annually? ?
           @interest_rate.value : calculate_rate
