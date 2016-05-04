@@ -9,12 +9,14 @@ module StonehengeBank
         raise NotImplementedError, 'Subclasses must provide their values.'
       end
 
-      def calculate_rate
-        ((1 + @interest_rate.value)**equivalent_rate_power - 1).round(5)
-      end
-
       def equivalent_rate_power
         raise NotImplementedError, 'Subclasses must provide their values.'
+      end
+
+      private
+
+      def calculate_rate
+        ((1 + @interest_rate.value)**equivalent_rate_power - 1).round(5)
       end
     end
   end

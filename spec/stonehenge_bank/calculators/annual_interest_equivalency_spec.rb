@@ -9,7 +9,6 @@ module StonehengeBank
 
       context 'as a subclass of InterestEquivalency' do
         it { is_expected.to respond_to :transformed_rate }
-        it { is_expected.to respond_to :calculate_rate }
         it { is_expected.to respond_to :equivalent_rate_power }
       end
 
