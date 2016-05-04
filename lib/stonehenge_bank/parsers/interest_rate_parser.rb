@@ -2,7 +2,7 @@ module StonehengeBank
   module Parsers
     class InterestRateParser
       def initialize(rate)
-        @rate = rate.split(/\%\s+/)
+        @rate = rate.split(/\%\s*/)
       end
 
       def construct_interest_rate
