@@ -1,8 +1,14 @@
 module StonehengeBank
   module Parsers
     class InterestRateParser
+      class RateNotParseable < StandardError; end
+
       def initialize(rate)
-        @rate = rate.split(/\%\s*/)
+        @rate = rate.split(/\W\s*/)
+
+        if @rate.first.to_f.zero?
+          raise RateNotParseable, 'The string typed is not parseable.'
+        end
       end
 
       def construct_interest_rate
