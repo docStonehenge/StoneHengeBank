@@ -24,8 +24,8 @@ module StonehengeBank
       end
 
       def generated_period_equivalency(period)
-        self.class.const_get(
-          "StonehengeBank::Calculators::#{period.capitalize}InterestEquivalency"
+        StonehengeBank.const_get(
+          "Calculators::#{period.capitalize}InterestEquivalency"
         ).new(@interest_rate)
       end
     end
