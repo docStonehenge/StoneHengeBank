@@ -1,6 +1,3 @@
-require 'stonehenge_bank/resources/investment'
-require 'stonehenge_bank/calculators/annual_interest_equivalency'
-
 module StonehengeBank
   module Resources
     describe Investment do

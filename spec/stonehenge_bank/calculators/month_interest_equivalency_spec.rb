@@ -1,5 +1,3 @@
-require 'stonehenge_bank/calculators/month_interest_equivalency'
-
 module StonehengeBank
   module Calculators
     describe MonthInterestEquivalency do

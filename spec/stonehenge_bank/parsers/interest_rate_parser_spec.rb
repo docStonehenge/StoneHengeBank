@@ -1,5 +1,3 @@
-require 'stonehenge_bank/parsers/interest_rate_parser'
-
 module StonehengeBank
   module Parsers
     describe InterestRateParser do

@@ -1,5 +1,3 @@
-require 'stonehenge_bank/calculators/annual_interest_equivalency'
-
 module StonehengeBank
   module Calculators
     describe AnnualInterestEquivalency do
