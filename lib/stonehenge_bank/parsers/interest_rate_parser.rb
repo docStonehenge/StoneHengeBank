@@ -4,7 +4,7 @@ module StonehengeBank
       class RateNotParseable < StandardError; end
 
       def initialize(rate)
-        @rate = rate.split(/\W\s*/)
+        @rate = rate.tr(',%', '. ').split(/\s+/)
 
         if @rate.first.to_f.zero?
           raise RateNotParseable, 'The string typed is not parseable.'
@@ -18,7 +18,7 @@ module StonehengeBank
       private
 
       def rate_value
-        @rate[0].to_f / 100.0
+        (@rate[0].to_f / 100.0).round(5)
       end
     end
   end

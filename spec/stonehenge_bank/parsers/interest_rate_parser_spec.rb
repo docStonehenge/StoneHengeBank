@@ -1,7 +1,7 @@
 module StonehengeBank
   module Parsers
     describe InterestRateParser do
-      subject { described_class.new('6% monthly') }
+      subject { described_class.new('6,31% monthly') }
 
       it 'raises error if is not possible to parse string' do
         expect {
@@ -28,7 +28,7 @@ module StonehengeBank
           result = subject.construct_interest_rate
 
           expect(result).to be_an_instance_of Resources::InterestRate
-          expect(result.value).to eql(0.06)
+          expect(result.value).to eql(0.0631)
           expect(result.period).to eql('monthly')
         end
       end
