@@ -1,14 +1,11 @@
 module StonehengeBank
   module Calculators
     describe MonthInterestEquivalency do
-      let(:interest_rate) { double(:interest_rate, value: 0.15) }
+      it_behaves_like 'an interest equivalency calculator'
+
+      let(:interest_rate) { double(:interest_rate) }
 
       subject { described_class.new(interest_rate) }
-
-      context 'as subclass of InterestEquivalency' do
-        it { is_expected.to respond_to :transformed_rate }
-        it { is_expected.to respond_to :equivalent_rate_power }
-      end
 
       describe '#equivalent_rate_power' do
         it 'returns the equivalent rate for annually period' do
@@ -42,39 +39,11 @@ module StonehengeBank
         end
       end
 
-      describe '#transformed_rate' do
-        specify 'when rate period is monthly' do
-          expect(interest_rate).to receive(:monthly?).and_return true
+      describe '#matches_rate_period?' do
+        it 'checks the rate period if it is monthly' do
+          expect(interest_rate).to receive(:monthly?)
 
-          expect(subject.transformed_rate).to eql 0.15
-        end
-
-        specify 'when rate period is quarterly' do
-          expect(interest_rate).to receive(:monthly?).and_return false
-          expect(subject).to receive(:equivalent_rate_power).and_return 1.0/3
-
-          expect(subject.transformed_rate).to eql 0.04769
-        end
-
-        specify 'when rate period is semiannually' do
-          expect(interest_rate).to receive(:monthly?).and_return false
-          expect(subject).to receive(:equivalent_rate_power).and_return 1.0/6
-
-          expect(subject.transformed_rate).to eql 0.02357
-        end
-
-        specify 'when rate period is annually' do
-          expect(interest_rate).to receive(:monthly?).and_return false
-          expect(subject).to receive(:equivalent_rate_power).and_return 1.0/12
-
-          expect(subject.transformed_rate).to eql 0.01171
-        end
-
-        specify 'when rate period is daily' do
-          expect(interest_rate).to receive(:monthly?).and_return false
-          expect(subject).to receive(:equivalent_rate_power).and_return 30
-
-          expect(subject.transformed_rate).to eql 65.21177
+          subject.matches_rate_period?
         end
       end
     end

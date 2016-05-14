@@ -6,10 +6,14 @@ module StonehengeBank
       end
 
       def transformed_rate
-        raise NotImplementedError, 'Subclasses must provide their values.'
+        matches_rate_period? ? @interest_rate.value : calculate_rate
       end
 
       def equivalent_rate_power
+        raise NotImplementedError, 'Subclasses must provide their values.'
+      end
+
+      def matches_rate_period?
         raise NotImplementedError, 'Subclasses must provide their values.'
       end
 
