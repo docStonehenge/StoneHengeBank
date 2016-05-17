@@ -1,6 +1,6 @@
 module StonehengeBank
-  module Parsers
-    class InterestRateParser
+  module Builders
+    class InterestRateBuilder
       class RateNotParseable < StandardError; end
 
       def initialize(rate)

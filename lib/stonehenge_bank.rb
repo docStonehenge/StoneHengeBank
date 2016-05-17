@@ -8,7 +8,7 @@ require 'stonehenge_bank/calculators/semester_interest_equivalency'
 require 'stonehenge_bank/calculators/trimester_interest_equivalency'
 require 'stonehenge_bank/calculators/month_interest_equivalency'
 require 'stonehenge_bank/calculators/day_interest_equivalency'
-require "stonehenge_bank/parsers/interest_rate_parser"
+require "stonehenge_bank/builders/interest_rate_builder"
 
 module StonehengeBank
 

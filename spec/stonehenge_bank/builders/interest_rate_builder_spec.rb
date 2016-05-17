@@ -1,13 +1,13 @@
 module StonehengeBank
-  module Parsers
-    describe InterestRateParser do
+  module Builders
+    describe InterestRateBuilder do
       subject { described_class.new('6,31% monthly') }
 
       it 'raises error if is not possible to parse string' do
         expect {
           described_class.new('foobar')
         }.to raise_error(
-               InterestRateParser::RateNotParseable, "The string typed is not parseable."
+               InterestRateBuilder::RateNotParseable, "The string typed is not parseable."
              )
       end
 
