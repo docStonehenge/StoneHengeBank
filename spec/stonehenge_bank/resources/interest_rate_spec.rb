@@ -47,7 +47,10 @@ module StonehengeBank
         it 'raises an exception if unknown periods are set' do
           @period = 'foo'
 
-          expect { subject.foo? }.to raise_error(NoMethodError)
+          expect { subject.foo? }.to raise_error(
+                                       InterestRate::InvalidRatePeriodError,
+                                       'This is not a valid period for a rate. Valid periods are: annually, semiannually, quarterly, monthly and daily.'
+                                     )
         end
       end
     end

@@ -1,6 +1,8 @@
 module StonehengeBank
   module Resources
     class InterestRate
+      class InvalidRatePeriodError < StandardError; end
+
       attr_reader :value, :period
 
       def initialize(value, period)
@@ -11,7 +13,7 @@ module StonehengeBank
         if matches_real_period? method_name
           period.start_with? method_name.to_s.chomp('?')
         else
-          super
+          raise InvalidRatePeriodError, 'This is not a valid period for a rate. Valid periods are: annually, semiannually, quarterly, monthly and daily.'
         end
       end
 
