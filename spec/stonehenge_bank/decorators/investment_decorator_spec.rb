@@ -1,6 +1,6 @@
 module StonehengeBank
-  module Builders
-    describe InvestmentMessagesBuilder do
+  module Decorators
+    describe InvestmentDecorator do
       let(:investment)  { double(:investment) }
       let(:equivalency) { StonehengeBank::Calculators::YearInterestEquivalency.new(double) }
 

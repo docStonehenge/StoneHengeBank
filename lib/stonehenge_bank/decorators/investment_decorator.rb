@@ -1,6 +1,6 @@
 module StonehengeBank
-  module Builders
-    class InvestmentMessagesBuilder
+  module Decorators
+    class InvestmentDecorator
       InvestmentMessagesOptions = OpenStruct.new(
         calculated_value_message: "An investment with %{current_value_type} \
 value of $%{current_value}, an interest rate of %{rate} and a period of \

@@ -9,7 +9,7 @@ require 'stonehenge_bank/calculators/trimester_interest_equivalency'
 require 'stonehenge_bank/calculators/month_interest_equivalency'
 require 'stonehenge_bank/calculators/day_interest_equivalency'
 require "stonehenge_bank/builders/interest_rate_builder"
-require "stonehenge_bank/builders/investment_messages_builder"
+require "stonehenge_bank/decorators/investment_decorator"
 
 module StonehengeBank
 
