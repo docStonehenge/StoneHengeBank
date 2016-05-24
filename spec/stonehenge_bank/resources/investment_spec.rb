@@ -33,6 +33,17 @@ module StonehengeBank
             subject.calculated_future_value(interest_equivalency, 2)
           ).to eql(101.20)
         end
+
+        it 'raises error if present value is not set' do
+          investment = Investment.new
+
+          expect {
+            investment.calculated_future_value(interest_equivalency, 2)
+          }.to raise_error(
+                 Investment::UncalculableInvestmentValueError,
+                 'Cannot calculate future value without a present value.'
+               )
+        end
       end
 
       describe '#calculated_present_value equivalency, period' do
@@ -45,6 +56,17 @@ module StonehengeBank
           expect(
             investment.calculated_present_value(interest_equivalency, 2)
           ).to eql(148.22)
+        end
+
+        it 'raises error if future value is not set' do
+          investment = Investment.new
+
+          expect {
+            investment.calculated_present_value(interest_equivalency, 2)
+          }.to raise_error(
+                 Investment::UncalculableInvestmentValueError,
+                 'Cannot calculate present value without a future value.'
+               )
         end
       end
 

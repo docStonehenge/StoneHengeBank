@@ -11,10 +11,20 @@ module StonehengeBank
       end
 
       def calculated_future_value(equivalency, period)
+        unless @present_value
+          raise UncalculableInvestmentValueError,
+                'Cannot calculate future value without a present value.'
+        end
+
         (@present_value * ((1 + equivalency.transformed_rate)**period)).round(2)
       end
 
       def calculated_present_value(equivalency, period)
+        unless @future_value
+          raise UncalculableInvestmentValueError,
+                'Cannot calculate present value without a future value.'
+        end
+
         (@future_value / ((1 + equivalency.transformed_rate)**period)).round(2)
       end
 
