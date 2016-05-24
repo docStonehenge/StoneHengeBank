@@ -24,7 +24,7 @@ module StonehengeBank
         ).to receive(:new).with(interest_rate).and_return(interest_equivalency)
       end
 
-      describe '#calculated_future_value equivalency, quantity' do
+      describe '#calculated_future_value equivalency, period' do
         it 'returns the calculated future value based on the period asked' do
           allow(interest_equivalency).to receive(:transformed_rate).
                                           and_return(0.006)
@@ -35,7 +35,7 @@ module StonehengeBank
         end
       end
 
-      describe '#calculated_present_value equivalency, quantity' do
+      describe '#calculated_present_value equivalency, period' do
         let(:investment) { Investment.new(future_value: 150.0) }
 
         it 'returns the calculated present value based on the period asked' do
@@ -74,6 +74,40 @@ module StonehengeBank
           expect {
             investment.calculated_investment_period(interest_equivalency)
           }.to raise_error('Cannot calculate period with null values.')
+        end
+      end
+
+      describe '#calculated_investment_rate period, quantity' do
+        it 'returns the interest rate for the investment at hand' do
+          investment = Investment.new(present_value: 100.0, future_value: 1450.0)
+
+          expect(
+            investment.calculated_investment_rate(:month, 36)
+          ).to eql "The interest rate for an investment with present value of $100.0 and future value of $1450.0 in 36 month(s) is 7.71.\n"
+        end
+
+        it 'returns an error if present value is nil' do
+          investment = Investment.new(future_value: 1450.0)
+
+          expect {
+            investment.calculated_investment_rate(:month, 36)
+          }.to raise_error(Investment::UncalculableInvestmentValueError, 'Cannot calculate interest rate with null values.')
+        end
+
+        it 'returns an error if future value is nil' do
+          investment = Investment.new(present_value: 1450.0)
+
+          expect {
+            investment.calculated_investment_rate(:month, 36)
+          }.to raise_error(Investment::UncalculableInvestmentValueError, 'Cannot calculate interest rate with null values.')
+        end
+
+        it 'returns an error if period type is not valid' do
+          investment = Investment.new(present_value: 100.0, future_value: 1450.0)
+
+          expect {
+            investment.calculated_investment_rate(:foo, 36)
+          }.to raise_error(Investment::UncalculableInvestmentValueError, 'Cannot calculate interest rate with an invalid period.')
         end
       end
     end

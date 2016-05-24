@@ -1,28 +1,61 @@
 module StonehengeBank
   module Resources
     class Investment
-      attr_reader :present_value, :future_value
+      class UncalculableInvestmentValueError < StandardError; end
+
+      CALCULATED_RATE_MESSAGE = <<-MSG
+The interest rate for an investment with present value of \
+$%{present_value} and future value of $%{future_value} \
+in %{quantity} %{period}(s) is %{rate}.
+MSG
+
+      attr_accessor :present_value, :future_value
 
       def initialize(present_value: nil, future_value: nil)
         @present_value = present_value
         @future_value  = future_value
       end
 
-      def calculated_future_value(equivalency, quantity)
-        (@present_value * ((1 + equivalency.transformed_rate)**quantity)).round(2)
+      def calculated_future_value(equivalency, period)
+        (@present_value * ((1 + equivalency.transformed_rate)**period)).round(2)
       end
 
-      def calculated_present_value(equivalency, quantity)
-        (@future_value / ((1 + equivalency.transformed_rate)**quantity)).round(2)
+      def calculated_present_value(equivalency, period)
+        (@future_value / ((1 + equivalency.transformed_rate)**period)).round(2)
       end
 
       def calculated_investment_period(equivalency)
-        unless @present_value && @future_value
-          raise 'Cannot calculate period with null values.'
-        end
+        check_investment_values!(:period)
 
         (Math.log(@future_value/@present_value) /
           Math.log(1 + equivalency.transformed_rate)).ceil
+      end
+
+      def calculated_investment_rate(period_kind, quantity)
+        check_investment_values!(:interest_rate)
+        matches_real_period_kind?(period_kind)
+
+        rate = ((((@future_value/@present_value)**(1/quantity.to_f)) - 1) * 100).round(2)
+
+        CALCULATED_RATE_MESSAGE % {
+          present_value: @present_value, future_value: @future_value,
+          quantity: quantity, period: period_kind, rate: rate
+        }
+      end
+
+      private
+
+      def check_investment_values!(value_type)
+        unless @present_value && @future_value
+          raise UncalculableInvestmentValueError, "Cannot calculate #{value_type.to_s.gsub('_', ' ')} with null values."
+        end
+      end
+
+      def matches_real_period_kind?(period_kind)
+        if period_kind !~ /year|semester|half|trimester|quarter|month|day/
+          raise UncalculableInvestmentValueError,
+                'Cannot calculate interest rate with an invalid period.'
+        end
       end
     end
   end
