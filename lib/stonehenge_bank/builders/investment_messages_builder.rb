@@ -1,9 +1,14 @@
 module StonehengeBank
   module Builders
     class InvestmentMessagesBuilder
-      CALCULATED_VALUE_MESSAGE = "An investment with %{current_value_type} value of $%{current_value}, \
-an interest rate of %{rate} and a period of %{period_quantity} %{period}(s) \
-returns a %{value_to_reach_type} value of $%{value_to_reach}."
+      CALCULATED_VALUE_MESSAGE = "An investment with %{current_value_type} \
+value of $%{current_value}, an interest rate of %{rate} and a period of \
+%{period_quantity} %{period}(s) returns a %{value_to_reach_type} \
+value of $%{value_to_reach}."
+
+      ERROR_MESSAGE = "Cannot elaborate a message because of an error on \
+the investment calculation: %{error}. Please, check the values needed to \
+be able to call the calculation again."
 
       def initialize(investment)
         @investment = investment
@@ -19,6 +24,8 @@ returns a %{value_to_reach_type} value of $%{value_to_reach}."
           value_to_reach_type: :future,
           value_to_reach: @investment.calculated_future_value(equivalency, period)
         }
+      rescue StonehengeBank::Resources::Investment::UncalculableInvestmentValueError => e
+        ERROR_MESSAGE % { error: e.to_s }
       end
 
       private
