@@ -1,7 +1,7 @@
 module StonehengeBank
   module Builders
     class InvestmentMessagesBuilder
-      InvestmentMessagesBuilderOptions = OpenStruct.new(
+      InvestmentMessagesOptions = OpenStruct.new(
         calculated_value_message: "An investment with %{current_value_type} \
 value of $%{current_value}, an interest rate of %{rate} and a period of \
 %{period_quantity} %{period}(s) %{verb} a %{value_to_reach_type} \
@@ -16,7 +16,7 @@ be able to call the calculation again."
       end
 
       def calculated_future_value_with_message(equivalency, period)
-        InvestmentMessagesBuilderOptions.calculated_value_message % {
+        InvestmentMessagesOptions.calculated_value_message % {
           current_value_type: :present,
           current_value: @investment.present_value,
           rate: equivalency_rounded_rate(equivalency.transformed_rate),
@@ -27,11 +27,11 @@ be able to call the calculation again."
           value_to_reach: @investment.calculated_future_value(equivalency, period)
         }
       rescue StonehengeBank::Resources::Investment::UncalculableInvestmentValueError => e
-        InvestmentMessagesBuilderOptions.error_message % { error: e.to_s }
+        InvestmentMessagesOptions.error_message % { error: e.to_s }
       end
 
       def calculated_present_value_with_message(equivalency, period)
-        InvestmentMessagesBuilderOptions.calculated_value_message % {
+        InvestmentMessagesOptions.calculated_value_message % {
           current_value_type: :future,
           current_value: @investment.future_value,
           rate: equivalency_rounded_rate(equivalency.transformed_rate),
@@ -42,7 +42,22 @@ be able to call the calculation again."
           value_to_reach: @investment.calculated_present_value(equivalency, period)
         }
       rescue StonehengeBank::Resources::Investment::UncalculableInvestmentValueError => e
-        InvestmentMessagesBuilderOptions.error_message % { error: e.to_s }
+        InvestmentMessagesOptions.error_message % { error: e.to_s }
+      end
+
+      def calculated_investment_rate_with_message(period_kind, quantity)
+        InvestmentMessagesOptions.calculated_value_message % {
+          current_value_type: :present,
+          current_value: @investment.present_value,
+          rate: equivalency_rounded_rate(@investment.calculated_investment_rate(period_kind, quantity)),
+          period_quantity: quantity,
+          period: period_kind,
+          verb: 'returns',
+          value_to_reach_type: :future,
+          value_to_reach: @investment.future_value
+        }
+      rescue StonehengeBank::Resources::Investment::UncalculableInvestmentValueError => e
+        InvestmentMessagesOptions.error_message % { error: e.to_s }
       end
 
       private
