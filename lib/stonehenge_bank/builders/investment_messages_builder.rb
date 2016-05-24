@@ -60,6 +60,21 @@ be able to call the calculation again."
         InvestmentMessagesOptions.error_message % { error: e.to_s }
       end
 
+      def calculated_investment_period_with_message(equivalency)
+        InvestmentMessagesOptions.calculated_value_message % {
+          current_value_type: :present,
+          current_value: @investment.present_value,
+          rate: equivalency_rounded_rate(equivalency.transformed_rate),
+          period_quantity: @investment.calculated_investment_period(equivalency),
+          period: equivalency_period(equivalency.class),
+          verb: 'returns',
+          value_to_reach_type: :future,
+          value_to_reach: @investment.future_value
+        }
+      rescue StonehengeBank::Resources::Investment::UncalculableInvestmentValueError => e
+        InvestmentMessagesOptions.error_message % { error: e.to_s }
+      end
+
       private
 
       def equivalency_rounded_rate(rate)
