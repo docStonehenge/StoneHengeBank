@@ -3,12 +3,6 @@ module StonehengeBank
     class Investment
       class UncalculableInvestmentValueError < StandardError; end
 
-      CALCULATED_RATE_MESSAGE = <<-MSG
-The interest rate for an investment with present value of \
-$%{present_value} and future value of $%{future_value} \
-in %{quantity} %{period}(s) is %{rate}.
-MSG
-
       attr_accessor :present_value, :future_value
 
       def initialize(present_value: nil, future_value: nil)
@@ -35,19 +29,15 @@ MSG
         check_investment_values!(:interest_rate)
         matches_real_period_kind?(period_kind)
 
-        rate = ((((@future_value/@present_value)**(1/quantity.to_f)) - 1) * 100).round(2)
-
-        CALCULATED_RATE_MESSAGE % {
-          present_value: @present_value, future_value: @future_value,
-          quantity: quantity, period: period_kind, rate: rate
-        }
+        ((((@future_value/@present_value)**(1/quantity.to_f)) - 1) * 100).round(2)
       end
 
       private
 
       def check_investment_values!(value_type)
         unless @present_value && @future_value
-          raise UncalculableInvestmentValueError, "Cannot calculate #{value_type.to_s.gsub('_', ' ')} with null values."
+          raise UncalculableInvestmentValueError,
+                "Cannot calculate #{value_type.to_s.gsub('_', ' ')} with null values."
         end
       end
 

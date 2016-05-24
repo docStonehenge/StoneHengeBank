@@ -83,7 +83,7 @@ module StonehengeBank
 
           expect(
             investment.calculated_investment_rate(:month, 36)
-          ).to eql "The interest rate for an investment with present value of $100.0 and future value of $1450.0 in 36 month(s) is 7.71.\n"
+          ).to eql 7.71
         end
 
         it 'returns an error if present value is nil' do
