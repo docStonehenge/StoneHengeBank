@@ -1,5 +1,7 @@
 require "stonehenge_bank/version"
 
+require 'ostruct'
+
 require "stonehenge_bank/resources/interest_rate"
 require "stonehenge_bank/resources/investment"
 require "stonehenge_bank/calculators/interest_equivalency"

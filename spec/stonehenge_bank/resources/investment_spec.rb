@@ -132,6 +132,31 @@ module StonehengeBank
           }.to raise_error(Investment::UncalculableInvestmentValueError, 'Cannot calculate interest rate with an invalid period.')
         end
       end
+
+      describe '#calculated_investment_regular_parcel equivalency, period' do
+        it 'returns the amount for the regular parcel to retrieve a future value' do
+          investment = Investment.new(future_value: 1500.0)
+
+          allow(interest_equivalency).to receive(:transformed_rate).and_return 0.1248
+
+          expect(
+            investment.calculated_investment_regular_parcel(interest_equivalency, 3)
+          ).to eql 393.39
+        end
+
+        it 'raises error if future_value is not set' do
+          investment = Investment.new(present_value: 1500.0)
+
+          allow(interest_equivalency).to receive(:transformed_rate).and_return 0.1248
+
+          expect {
+            investment.calculated_investment_regular_parcel(interest_equivalency, 3)
+          }.to raise_error(
+                 Investment::UncalculableInvestmentValueError,
+                 'Cannot calculate parcel without a future value.'
+               )
+        end
+      end
     end
   end
 end
