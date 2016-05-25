@@ -133,15 +133,15 @@ module StonehengeBank
         end
       end
 
-      describe '#calculated_investment_regular_parcel equivalency, period' do
+      describe '#calculated_regular_parcel equivalency, period' do
         it 'returns the amount for the regular parcel to retrieve a future value' do
-          investment = Investment.new(future_value: 1500.0)
+          investment = Investment.new(present_value: 100_000, future_value: 1_000_000.0)
 
-          allow(interest_equivalency).to receive(:transformed_rate).and_return 0.1248
+          allow(interest_equivalency).to receive(:transformed_rate).and_return 0.13
 
           expect(
-            investment.calculated_investment_regular_parcel(interest_equivalency, 3)
-          ).to eql 393.39
+            investment.calculated_regular_parcel(interest_equivalency, 3)
+          ).to eql 251_169.77
         end
 
         it 'raises error if future_value is not set' do
@@ -150,10 +150,23 @@ module StonehengeBank
           allow(interest_equivalency).to receive(:transformed_rate).and_return 0.1248
 
           expect {
-            investment.calculated_investment_regular_parcel(interest_equivalency, 3)
+            investment.calculated_regular_parcel(interest_equivalency, 3)
           }.to raise_error(
                  Investment::UncalculableInvestmentValueError,
-                 'Cannot calculate parcel without a future value.'
+                 'Cannot calculate regular parcel with null values.'
+               )
+        end
+
+        it 'raises error if present_value is not set' do
+          investment = Investment.new(future_value: 1500.0)
+
+          allow(interest_equivalency).to receive(:transformed_rate).and_return 0.1248
+
+          expect {
+            investment.calculated_regular_parcel(interest_equivalency, 3)
+          }.to raise_error(
+                 Investment::UncalculableInvestmentValueError,
+                 'Cannot calculate regular parcel with null values.'
                )
         end
       end

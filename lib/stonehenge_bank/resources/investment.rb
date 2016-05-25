@@ -6,8 +6,7 @@ module StonehengeBank
       attr_accessor :present_value, :future_value
 
       def initialize(present_value: nil, future_value: nil)
-        @present_value = present_value
-        @future_value  = future_value
+        @present_value, @future_value = present_value, future_value
       end
 
       def calculated_future_value(equivalency, period)
@@ -38,18 +37,12 @@ module StonehengeBank
         ((((future_value/present_value)**(1/quantity.to_f)) - 1) * 100).round(2)
       end
 
-      def calculated_investment_regular_parcel(equivalency, period)
-        raise UncalculableInvestmentValueError,
-              'Cannot calculate parcel without a future value.' unless future_value
+      def calculated_regular_parcel(equivalency, period)
+        check_investment_values!(:regular_parcel)
 
         (
-          future_value / (
-            neutralized_rate_for(equivalency) * (
-              (
-                (period_power_calculated_rate(equivalency, period)) - 1
-              ) / equivalency.transformed_rate
-            )
-          )
+          (future_value - (present_value * period_power_calculated_rate(equivalency, period))) /
+          ((period_power_calculated_rate(equivalency, period) - 1) / equivalency.transformed_rate)
         ).round 2
       end
 
@@ -63,10 +56,10 @@ module StonehengeBank
         neutralized_rate_for(equivalency)**period
       end
 
-      def check_investment_values!(value_type)
+      def check_investment_values!(calculation_type)
         unless present_value && future_value
           raise UncalculableInvestmentValueError,
-                "Cannot calculate #{value_type.to_s.gsub('_', ' ')} with null values."
+                "Cannot calculate #{calculation_type.to_s.gsub('_', ' ')} with null values."
         end
       end
 
