@@ -12,6 +12,7 @@ require 'stonehenge_bank/calculators/month_interest_equivalency'
 require 'stonehenge_bank/calculators/day_interest_equivalency'
 require "stonehenge_bank/builders/interest_rate_builder"
 require "stonehenge_bank/decorators/investment_decorator"
+require "stonehenge_bank/formatters/future_value_message_formatter"
 
 module StonehengeBank
 
