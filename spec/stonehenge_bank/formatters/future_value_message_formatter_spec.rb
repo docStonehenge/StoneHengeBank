@@ -6,6 +6,9 @@ module StonehengeBank
 
       subject { described_class.new(investment) }
 
+      specify { expect(subject.current_value_type).to eql :present_value }
+      specify { expect(subject.value_to_reach_type).to eql :future_value }
+
       describe '#calculation_with_message equivalency, period' do
         it 'returns the future value calculation with a formatted explanation message' do
           expect(investment).to receive(:present_value).and_return 1000.0
@@ -16,7 +19,7 @@ module StonehengeBank
 
           expect(
             subject.calculation_with_message(equivalency, 2)
-          ).to eql "An investment with present value of $1000.0, an interest rate of 12.48% on a period of 2 year(s), returns a future value of $1500.0."
+          ).to eql "An investment with present value of $1000.0, an interest rate of 12.48, on a period of 2 year(s), returns a future value of $1500.0."
         end
       end
     end
