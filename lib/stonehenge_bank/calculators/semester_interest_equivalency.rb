@@ -1,15 +1,24 @@
 module StonehengeBank
   module Calculators
     class SemesterInterestEquivalency < InterestEquivalency
-      def equivalent_rate_power
-        return 0.5 if @interest_rate.annually?
-        return 2 if @interest_rate.quarterly?
-        return 6 if @interest_rate.monthly?
-        return 180 if @interest_rate.daily?
-      end
-
       def matches_rate_period?
         @interest_rate.semiannually?
+      end
+
+      def anually_rate_power
+        0.5
+      end
+
+      def quarterly_rate_power
+        2
+      end
+
+      def monthly_rate_power
+        6
+      end
+
+      def daily_rate_power
+        180
       end
     end
   end

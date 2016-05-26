@@ -1,8 +1,8 @@
 module StonehengeBank
   module Resources
     describe Investment do
-      let(:interest_rate)           { double(:interest_rate) }
-      let(:interest_equivalency)    { double(:calculator) }
+      let(:interest_rate)        { double(:interest_rate) }
+      let(:interest_equivalency) { double(:calculator) }
 
       context 'a newly created investment' do
         subject { described_class.new(present_value: 100.0) }
