@@ -9,41 +9,26 @@ module StonehengeBank
 
       describe '#equivalent_rate_power' do
         specify 'when rate period is annually' do
-          allow(interest_rate).to receive(:annually?).and_return true
-
-          expect(subject.equivalent_rate_power).to eql 0.25
+          expect(subject.anually_rate_power).to eql 0.25
         end
 
         specify 'when rate period is semiannually' do
-          allow(interest_rate).to receive(:annually?).and_return false
-          allow(interest_rate).to receive(:semiannually?).and_return true
-
-          expect(subject.equivalent_rate_power).to eql 0.5
+          expect(subject.semiannually_rate_power).to eql 0.5
         end
 
         specify 'when rate period is monthly' do
-          allow(interest_rate).to receive(:annually?).and_return false
-          allow(interest_rate).to receive(:semiannually?).and_return false
-          allow(interest_rate).to receive(:monthly?).and_return true
-
-          expect(subject.equivalent_rate_power).to eql 3
+          expect(subject.monthly_rate_power).to eql 3
         end
 
         specify 'when rate period is daily' do
-          allow(interest_rate).to receive(:annually?).and_return false
-          allow(interest_rate).to receive(:semiannually?).and_return false
-          allow(interest_rate).to receive(:monthly?).and_return false
-          allow(interest_rate).to receive(:daily?).and_return true
-
-          expect(subject.equivalent_rate_power).to eql 90
+          expect(subject.daily_rate_power).to eql 90
         end
       end
 
       describe '#matches_rate_period?' do
         it 'checks rate period if it is quarterly' do
-          expect(interest_rate).to receive(:quarterly?)
-
-          subject.matches_rate_period?
+          expect(interest_rate).to receive(:quarterly?).and_return(true)
+          expect(subject.matches_rate_period?).to be true
         end
       end
     end

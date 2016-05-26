@@ -9,41 +9,26 @@ module StonehengeBank
 
       describe '#equivalent_rate_power' do
         it 'returns the equivalent power for monthly period' do
-          allow(interest_rate).to receive(:monthly?).and_return true
-
-          expect(subject.equivalent_rate_power).to eql 12
+          expect(subject.monthly_rate_power).to eql 12
         end
 
         it 'returns the equivalent power for quarterly period' do
-          allow(interest_rate).to receive(:monthly?).and_return false
-          allow(interest_rate).to receive(:quarterly?).and_return true
-
-          expect(subject.equivalent_rate_power).to eql 4
+          expect(subject.quarterly_rate_power).to eql 4
         end
 
         it 'returns the equivalent power for semiannually period' do
-          allow(interest_rate).to receive(:monthly?).and_return false
-          allow(interest_rate).to receive(:quarterly?).and_return false
-          allow(interest_rate).to receive(:semiannually?).and_return true
-
-          expect(subject.equivalent_rate_power).to eql 2
+          expect(subject.semiannually_rate_power).to eql 2
         end
 
         it 'returns the equivalent power for daily period' do
-          allow(interest_rate).to receive(:monthly?).and_return false
-          allow(interest_rate).to receive(:quarterly?).and_return false
-          allow(interest_rate).to receive(:semiannually?).and_return false
-          allow(interest_rate).to receive(:daily?).and_return true
-
-          expect(subject.equivalent_rate_power).to eql 360
+          expect(subject.daily_rate_power).to eql 360
         end
       end
 
       describe '#matches_rate_period?' do
         it 'checks rate period to see if it is annually' do
-          expect(interest_rate).to receive(:annually?)
-
-          subject.matches_rate_period?
+          expect(interest_rate).to receive(:annually?).and_return(true)
+          expect(subject.matches_rate_period?).to be true
         end
       end
     end
