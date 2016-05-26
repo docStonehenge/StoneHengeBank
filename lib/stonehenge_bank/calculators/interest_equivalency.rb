@@ -10,7 +10,7 @@ module StonehengeBank
       end
 
       def equivalent_rate_power
-        raise NotImplementedError, 'Subclasses must provide their values.'
+        public_send(@interest_rate.period << '_rate_power')
       end
 
       def matches_rate_period?
@@ -20,7 +20,7 @@ module StonehengeBank
       private
 
       def calculate_rate
-        ((1 + @interest_rate.value)**equivalent_rate_power - 1).round(5)
+        ((1 + @interest_rate.value) ** equivalent_rate_power - 1).round(5)
       end
     end
   end
