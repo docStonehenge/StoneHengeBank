@@ -1,5 +1,7 @@
 require "stonehenge_bank/version"
 
+require 'ostruct'
+
 require "stonehenge_bank/resources/interest_rate"
 require "stonehenge_bank/resources/investment"
 require "stonehenge_bank/calculators/interest_equivalency"
@@ -9,6 +11,7 @@ require 'stonehenge_bank/calculators/trimester_interest_equivalency'
 require 'stonehenge_bank/calculators/month_interest_equivalency'
 require 'stonehenge_bank/calculators/day_interest_equivalency'
 require "stonehenge_bank/builders/interest_rate_builder"
+require "stonehenge_bank/decorators/investment_decorator"
 
 module StonehengeBank
 
