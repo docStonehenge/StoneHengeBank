@@ -5,7 +5,7 @@ module StonehengeBank
         @interest_rate.quarterly?
       end
 
-      def anually_rate_power
+      def annually_rate_power
         0.25
       end
 

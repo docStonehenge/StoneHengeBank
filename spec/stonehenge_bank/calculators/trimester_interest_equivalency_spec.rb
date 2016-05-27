@@ -9,7 +9,7 @@ module StonehengeBank
 
       describe '#equivalent_rate_power' do
         specify 'when rate period is annually' do
-          expect(subject.anually_rate_power).to eql 0.25
+          expect(subject.annually_rate_power).to eql 0.25
         end
 
         specify 'when rate period is semiannually' do
