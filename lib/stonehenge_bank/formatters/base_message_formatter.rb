@@ -1,20 +1,22 @@
 module StonehengeBank
   module Formatters
-    module BaseMessageFormatter
-      def calculation_with_message(equivalency, period)
-        yield "An investment with #{humanized_value_type(current_value_type)} of \
-$#{@investment.public_send(current_value_type)}, an interest rate of \
-#{interest_rate_percentage_for(equivalency)}, on a period of #{period} \
-#{formatted_periodicity_with(equivalency)}(s), %{message_verb} a \
-#{humanized_value_type(value_to_reach_type)} of \
-$#{investment_calculation_with(equivalency, period)}."
+    class BaseMessageFormatter
+      def initialize(investment, with_message: Messages::InvestmentMessage.new)
+        @investment, @message = investment, with_message
+      end
+
+      def for_type(formatter_type)
+        extend(Formatters.const_get(classified_formatter_type(formatter_type)))
+      rescue NameError
+        raise Formatters::FormatterNotFoundError,
+              "#{formatter_type.to_s.capitalize} message formatter does not exist."
       end
 
       private
 
-      def investment_calculation_with(equivalency, period)
-        @investment.public_send(
-          "calculated_#{value_to_reach_type}", equivalency, period
+      def classified_formatter_type(type)
+        "MessageFormatter".prepend(
+          type.to_s.split('_').map(&:capitalize).join
         )
       end
 

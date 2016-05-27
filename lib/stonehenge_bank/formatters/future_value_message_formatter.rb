@@ -1,24 +1,18 @@
 module StonehengeBank
   module Formatters
-    class FutureValueMessageFormatter
-      include BaseMessageFormatter
-
-      def initialize(investment)
-        @investment = investment
-      end
-
-      def current_value_type
-        :present_value
-      end
-
-      def value_to_reach_type
-        :future_value
-      end
-
+    module FutureValueMessageFormatter
       def calculation_with_message(equivalency, period)
-        super(equivalency, period) do |message|
-          message % { message_verb: 'returns' }
-        end
+        @message.with_value(
+          humanized_value_type(:present_value), @investment.present_value
+        )
+
+        @message.with_rate(interest_rate_percentage_for(equivalency))
+        @message.with_period(formatted_periodicity_with(equivalency), period)
+
+        @message.returns_value(
+            humanized_value_type(:future_value),
+            @investment.calculated_future_value(equivalency, period)
+          )
       end
     end
   end

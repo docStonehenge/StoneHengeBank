@@ -1,35 +1,30 @@
 module StonehengeBank
   module Messages
     class InvestmentMessage
-      attr_reader :message
+      attr_reader :text
 
       def initialize
-        @message = 'An investment'
+        @text = 'An investment'
       end
 
       def with_rate(rate)
-        @message << " with an interest rate of #{rate}%,"
-        self
+        @text << " with an interest rate of #{rate}%,"
       end
 
       def with_period(periodicity, value)
-        @message << " on a period of #{value} #{periodicity}(s),"
-        self
+        @text << " on a period of #{value} #{periodicity}(s),"
       end
 
       def with_value(value_type, value)
-        @message << " with a #{value_type} of $#{value},"
-        self
+        @text << " with a #{value_type} of $#{value},"
       end
 
       def returns_value(value_type, value)
-        @message << " returns a #{value_type} of $#{value}."
-        self
+        @text << " returns a #{value_type} of $#{value}."
       end
 
       def has_value(value_type, value)
-        @message << " has #{value_type} of $#{value}."
-        self
+        @text << " has #{value_type} of $#{value}."
       end
     end
   end
