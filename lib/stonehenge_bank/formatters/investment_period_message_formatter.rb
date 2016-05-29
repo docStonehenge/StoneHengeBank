@@ -1,7 +1,7 @@
 module StonehengeBank
   module Formatters
     module InvestmentPeriodMessageFormatter
-      def calculation_with_message(equivalency, period = 0)
+      def calculation_with_message(equivalency)
         @message.has_value(
           humanized_value_type(:present_value), @investment.present_value, separator: ', '
         )
