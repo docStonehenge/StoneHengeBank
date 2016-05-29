@@ -19,8 +19,8 @@ module StonehengeBank
                                   :calculated_investment_period
                                 ).with(equivalency).and_return 36
 
-          expect(message).to receive(:has_value).with('present value', 1000.0, separator: ', ')
-          expect(message).to receive(:has_value).with('future value', 1500.0, separator: ', ')
+          expect(message).to receive(:has_value).with('present value', 1000.0, separator: ',')
+          expect(message).to receive(:has_value).with('future value', 1500.0, separator: ',')
           expect(message).to receive(:with_rate).with(0.94)
 
           expect(message).to receive(:with_period).
