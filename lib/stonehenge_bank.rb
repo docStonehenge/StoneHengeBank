@@ -19,6 +19,7 @@ require "stonehenge_bank/formatters/future_value_message_formatter"
 require "stonehenge_bank/formatters/present_value_message_formatter"
 require "stonehenge_bank/formatters/investment_period_message_formatter"
 require "stonehenge_bank/formatters/investment_rate_message_formatter"
+require "stonehenge_bank/formatters/regular_parcel_message_formatter"
 
 module StonehengeBank
 
