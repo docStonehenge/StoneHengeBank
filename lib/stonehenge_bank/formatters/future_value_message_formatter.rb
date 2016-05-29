@@ -6,7 +6,7 @@ module StonehengeBank
           humanized_value_type(:present_value), @investment.present_value
         )
 
-        @message.with_rate(interest_rate_percentage_for(equivalency))
+        @message.with_rate(interest_rate_percentage_for(equivalency.transformed_rate))
         @message.with_period(formatted_periodicity_with(equivalency), period)
 
         @message.returns_value(

@@ -99,12 +99,12 @@ module StonehengeBank
         end
       end
 
-      describe '#calculated_investment_rate period, quantity' do
+      describe '#calculated_investment_rate period' do
         it 'returns the interest rate for the investment at hand' do
           investment = Investment.new(present_value: 100.0, future_value: 1450.0)
 
           expect(
-            investment.calculated_investment_rate(:month, 36)
+            investment.calculated_investment_rate(36)
           ).to eql 7.71
         end
 
@@ -112,7 +112,7 @@ module StonehengeBank
           investment = Investment.new(future_value: 1450.0)
 
           expect {
-            investment.calculated_investment_rate(:month, 36)
+            investment.calculated_investment_rate(36)
           }.to raise_error(Investment::UncalculableInvestmentValueError, 'Cannot calculate interest rate with null values.')
         end
 
@@ -120,16 +120,8 @@ module StonehengeBank
           investment = Investment.new(present_value: 1450.0)
 
           expect {
-            investment.calculated_investment_rate(:month, 36)
+            investment.calculated_investment_rate(36)
           }.to raise_error(Investment::UncalculableInvestmentValueError, 'Cannot calculate interest rate with null values.')
-        end
-
-        it 'returns an error if period type is not valid' do
-          investment = Investment.new(present_value: 100.0, future_value: 1450.0)
-
-          expect {
-            investment.calculated_investment_rate(:foo, 36)
-          }.to raise_error(Investment::UncalculableInvestmentValueError, 'Cannot calculate interest rate with an invalid period.')
         end
       end
 

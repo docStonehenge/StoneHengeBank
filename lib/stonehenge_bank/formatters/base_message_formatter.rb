@@ -24,8 +24,8 @@ module StonehengeBank
         type.to_s.tr('_', ' ')
       end
 
-      def interest_rate_percentage_for(equivalency)
-        (equivalency.transformed_rate * 100).round(2)
+      def interest_rate_percentage_for(rate)
+        (rate * 100).round(2)
       end
 
       def formatted_periodicity_with(equivalency)
