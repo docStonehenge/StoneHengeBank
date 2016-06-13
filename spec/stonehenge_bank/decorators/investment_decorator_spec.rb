@@ -40,17 +40,19 @@ module StonehengeBank
           end
         end
 
-        context "when method name just contains '_value' suffix" do
-          it 'calls method on investment if it responds to the message' do
+        context "when investment responds to method" do
+          it 'calls method on investment' do
             expect(investment).to receive(:calculated_future_value).with(equivalency, 24)
             subject.calculated_future_value(equivalency, 24)
           end
         end
 
-        it 'raises NoMethodError for nonexistent methods on investment' do
-          expect {
-            subject.calculated_foo_value(equivalency, 2)
-          }.to raise_error(NoMethodError)
+        context 'when investment does not respond to method' do
+          it 'raises NoMethodError' do
+            expect {
+              subject.calculated_foo_value(equivalency, 2)
+            }.to raise_error(NoMethodError)
+          end
         end
       end
     end
