@@ -13,14 +13,18 @@ module StonehengeBank
         raise UncalculableInvestmentValueError,
               'Cannot calculate future value without a present value.' unless present_value
 
-        (present_value * period_power_calculated_rate(equivalency, period)).round(2)
+        self.future_value = (
+          present_value * period_power_calculated_rate(equivalency, period)
+        ).round(2)
       end
 
       def calculated_present_value(equivalency, period)
         raise UncalculableInvestmentValueError,
               'Cannot calculate present value without a future value.' unless future_value
 
-        (future_value / period_power_calculated_rate(equivalency, period)).round(2)
+        self.present_value = (
+          future_value / period_power_calculated_rate(equivalency, period)
+        ).round(2)
       end
 
       def calculated_investment_period(equivalency)
