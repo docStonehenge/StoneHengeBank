@@ -33,7 +33,7 @@ module StonehengeBank
       def calculated_investment_rate(period)
         check_investment_values!(:interest_rate)
 
-        ((((future_value/present_value)**(1/period.to_f)) - 1) * 100).round(2)
+        (((future_value/present_value)**(1/period.to_f)) - 1).round 5
       end
 
       def calculated_regular_parcel(equivalency, period)

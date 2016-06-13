@@ -14,7 +14,7 @@ module StonehengeBank
         it 'returns investment rate calculation with a formatted message' do
           expect(investment).to receive(
                                   :calculated_investment_rate
-                                ).with(24).and_return 3.45
+                                ).with(24).and_return 0.0345
 
           expect(message).to receive(:has_value).with('present value', 100.0, separator: ',')
           expect(message).to receive(:has_value).with('future value', 1000.0, separator: ',')

@@ -13,7 +13,9 @@ module StonehengeBank
         @message.with_period(period_type, period_amount)
 
         @message.with_rate(
-          @investment.calculated_investment_rate(period_amount), separator: '.'
+          interest_rate_percentage_for(
+            @investment.calculated_investment_rate(period_amount)
+          ), separator: '.'
         )
       end
     end

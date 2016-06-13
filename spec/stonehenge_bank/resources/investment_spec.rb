@@ -105,7 +105,7 @@ module StonehengeBank
 
           expect(
             investment.calculated_investment_rate(36)
-          ).to eql 7.71
+          ).to eql 0.07711
         end
 
         it 'returns an error if present value is nil' do
