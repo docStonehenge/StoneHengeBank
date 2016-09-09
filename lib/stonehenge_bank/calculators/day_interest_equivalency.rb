@@ -5,7 +5,7 @@ module StonehengeBank
         @interest_rate.daily?
       end
 
-      def anually_rate_power
+      def annually_rate_power
         1.0 / 360
       end
 

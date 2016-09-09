@@ -10,7 +10,7 @@ module StonehengeBank
       end
 
       def equivalent_rate_power
-        public_send(@interest_rate.period << '_rate_power')
+        public_send("#{@interest_rate.period}_rate_power")
       end
 
       def matches_rate_period?
