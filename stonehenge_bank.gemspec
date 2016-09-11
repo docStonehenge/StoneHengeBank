@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["victor.alexandrefs@gmail.com"]
 
   spec.summary       = %q{Simple program to provide financial calculations.}
-  spec.description   = %q{This program provides a simple interface for the various financial calculations, to help users on a better understading.}
+  spec.description   = %q{This program provides a simple interface for the various financial calculations, to help users on a better understanding.}
   spec.homepage      = "https://github.com/guilhermeFranco/StoneHengeBank"
   spec.license       = "MIT"
 
