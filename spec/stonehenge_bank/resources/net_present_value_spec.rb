@@ -7,10 +7,9 @@ module StonehengeBank
 
       it { is_expected.to have_attributes(investments: []) }
 
-      describe '#append_cash_flow cash_flow' do
-        it 'appends a investment with cash flow as future value to its collection' do
-          expect(Investment).to receive(:new).with(future_value: 1000.0).and_return investment
-          subject.append_cash_flow 1000.0
+      describe '#append_investment investment' do
+        it 'appends an investment to hold its future value as a cash flow' do
+          subject.append_investment investment
           expect(subject.investments).to include investment
         end
       end

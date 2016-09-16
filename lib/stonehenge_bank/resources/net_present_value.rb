@@ -7,8 +7,8 @@ module StonehengeBank
         @cost, @investments = cost, []
       end
 
-      def append_cash_flow(cash_flow)
-        investments << Investment.new(future_value: cash_flow)
+      def append_investment(investment)
+        investments << investment
       end
 
       def calculate(using_equivalency:)
