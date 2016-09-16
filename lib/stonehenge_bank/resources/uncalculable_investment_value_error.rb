@@ -1,0 +1,1 @@
+class UncalculableInvestmentValueError < StandardError; end

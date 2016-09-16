@@ -15,6 +15,10 @@ module StonehengeBank
         investments.each_with_index.inject(0) do |sum, (investment, index)|
           sum += investment.calculated_present_value(using_equivalency, index+1)
         end - @cost
+
+      rescue UncalculableInvestmentValueError
+        raise CashFlowCalculationError,
+              'An error occurred on Net Present Value calculation due to cash flow inconsistencies.'
       end
     end
   end

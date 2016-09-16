@@ -37,6 +37,18 @@ module StonehengeBank
             subject.calculate(using_equivalency: year_interest_equivalency)
           ).to eql 200.0
         end
+
+        it 'raises error when cash flow calculation runs on error' do
+          expect(subject).to receive(:investments).and_return [investment]
+
+          expect(investment).to receive(
+                                  :calculated_present_value
+                                ).with(year_interest_equivalency, 1).and_raise(UncalculableInvestmentValueError)
+
+          expect {
+            subject.calculate(using_equivalency: year_interest_equivalency)
+          }.to raise_error(CashFlowCalculationError, 'An error occurred on Net Present Value calculation due to cash flow inconsistencies.')
+        end
       end
     end
   end

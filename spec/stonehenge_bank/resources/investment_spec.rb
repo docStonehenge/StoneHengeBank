@@ -42,7 +42,7 @@ module StonehengeBank
           expect {
             subject.calculated_future_value(interest_equivalency, 2)
           }.to raise_error(
-                 Investment::UncalculableInvestmentValueError,
+                 ::UncalculableInvestmentValueError,
                  'Cannot calculate future value without a present value.'
                )
         end
@@ -69,7 +69,7 @@ module StonehengeBank
           expect {
             subject.calculated_present_value(interest_equivalency, 2)
           }.to raise_error(
-                 Investment::UncalculableInvestmentValueError,
+                 ::UncalculableInvestmentValueError,
                  'Cannot calculate present value without a future value.'
                )
         end
@@ -118,13 +118,13 @@ module StonehengeBank
 
           expect {
             subject.calculated_investment_rate(36)
-          }.to raise_error(Investment::UncalculableInvestmentValueError, 'Cannot calculate interest rate with null values.')
+          }.to raise_error(::UncalculableInvestmentValueError, 'Cannot calculate interest rate with null values.')
         end
 
         it 'returns an error if future value is nil' do
           expect {
             subject.calculated_investment_rate(36)
-          }.to raise_error(Investment::UncalculableInvestmentValueError, 'Cannot calculate interest rate with null values.')
+          }.to raise_error(::UncalculableInvestmentValueError, 'Cannot calculate interest rate with null values.')
         end
       end
 
@@ -146,7 +146,7 @@ module StonehengeBank
           expect {
             subject.calculated_regular_parcel(interest_equivalency, 3)
           }.to raise_error(
-                 Investment::UncalculableInvestmentValueError,
+                 ::UncalculableInvestmentValueError,
                  'Cannot calculate regular parcel with null values.'
                )
         end
@@ -160,7 +160,7 @@ module StonehengeBank
           expect {
             subject.calculated_regular_parcel(interest_equivalency, 3)
           }.to raise_error(
-                 Investment::UncalculableInvestmentValueError,
+                 ::UncalculableInvestmentValueError,
                  'Cannot calculate regular parcel with null values.'
                )
         end

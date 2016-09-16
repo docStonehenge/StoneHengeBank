@@ -4,6 +4,8 @@ require 'ostruct'
 
 require "stonehenge_bank/resources/interest_rate"
 require "stonehenge_bank/resources/investment"
+require "stonehenge_bank/resources/uncalculable_investment_value_error"
+require "stonehenge_bank/calculators/cash_flow_calculation_error"
 require "stonehenge_bank/resources/net_present_value"
 require "stonehenge_bank/calculators/interest_equivalency"
 require "stonehenge_bank/calculators/year_interest_equivalency"
