@@ -1,5 +1,5 @@
 module StonehengeBank
-  module Resources
+  module Calculators
     describe NetPresentValue do
       let(:investment) { double(:investment) }
 

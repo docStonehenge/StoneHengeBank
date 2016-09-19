@@ -1,5 +1,5 @@
 module StonehengeBank
-  module Resources
+  module Calculators
     class NetPresentValue
       attr_reader :investments
 
