@@ -14,7 +14,7 @@ module StonehengeBank
         end
       end
 
-      describe '#calculated_net_present_value with_rate_equivalency:' do
+      describe '#calculated_net_present_value npv_calculator, with_rate_equivalency:' do
         let(:net_present_value_calculator) { double(:net_present_value_calculator) }
         let(:rate_equivalency)             { double(:rate_equivalency) }
 
@@ -38,6 +38,15 @@ module StonehengeBank
           expect {
             subject.calculated_net_present_value(net_present_value_calculator, with_rate_equivalency: rate_equivalency)
           }.to raise_error(CashFlowCalculationError, 'Foo')
+        end
+      end
+
+      describe '#calculated_payback_period payback_calculator' do
+        let(:payback_calculator) { double(:payback_calculator) }
+
+        it 'delegates calculation to payback calculator using itself' do
+          expect(payback_calculator).to receive(:calculate).with(subject).and_return 3
+          expect(subject.calculated_payback_period(payback_calculator)).to eql 3
         end
       end
     end
