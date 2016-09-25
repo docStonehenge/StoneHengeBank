@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 module StonehengeBank
   module Resources
     describe CashFlow do
