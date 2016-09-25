@@ -1,0 +1,1 @@
+class CashFlowCalculationError < StandardError; end

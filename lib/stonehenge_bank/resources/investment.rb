@@ -1,8 +1,6 @@
 module StonehengeBank
   module Resources
     class Investment
-      class UncalculableInvestmentValueError < StandardError; end
-
       attr_accessor :present_value, :future_value
 
       def initialize(present_value: nil, future_value: nil)
@@ -10,7 +8,7 @@ module StonehengeBank
       end
 
       def calculated_future_value(equivalency, period)
-        raise UncalculableInvestmentValueError,
+        raise ::UncalculableInvestmentValueError,
               'Cannot calculate future value without a present value.' unless present_value
 
         self.future_value = (
@@ -19,7 +17,7 @@ module StonehengeBank
       end
 
       def calculated_present_value(equivalency, period)
-        raise UncalculableInvestmentValueError,
+        raise ::UncalculableInvestmentValueError,
               'Cannot calculate present value without a future value.' unless future_value
 
         self.present_value = (
@@ -61,7 +59,7 @@ module StonehengeBank
 
       def check_investment_values!(calculation_type)
         unless present_value && future_value
-          raise UncalculableInvestmentValueError,
+          raise ::UncalculableInvestmentValueError,
                 "Cannot calculate #{calculation_type.to_s.gsub('_', ' ')} with null values."
         end
       end
