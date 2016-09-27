@@ -48,6 +48,16 @@ module StonehengeBank
           expect(payback_calculator).to receive(:calculate).with(subject).and_return 3
           expect(subject.calculated_payback_period(payback_calculator)).to eql 3
         end
+
+        it 'raises CashFlowCalculationError due to calculation inconsistencies' do
+          expect(
+            payback_calculator
+          ).to receive(:calculate).with(subject).and_raise CashFlowCalculationError, 'Foo'
+
+          expect {
+            subject.calculated_payback_period(payback_calculator)
+          }.to raise_error(CashFlowCalculationError, 'Foo')
+        end
       end
     end
   end
