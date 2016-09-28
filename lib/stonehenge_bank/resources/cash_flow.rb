@@ -11,11 +11,11 @@ module StonehengeBank
         investments << investment
       end
 
-      def calculated_net_present_value(npv_calculator, with_rate_equivalency:)
+      def net_present_value(npv_calculator, with_rate_equivalency:)
         npv_calculator.calculate(self, using_equivalency: with_rate_equivalency)
       end
 
-      def calculated_payback_period(payback_calculator)
+      def payback_period(payback_calculator)
         payback_calculator.calculate(self)
       end
     end
