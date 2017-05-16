@@ -22,6 +22,8 @@ module StonehengeBank
                 equivalency,
                 options.dig('period').to_i
               )
+      rescue => e
+        print "There is an error with options used: #{e.message}"
       end
 
       private

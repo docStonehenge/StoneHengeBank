@@ -106,4 +106,12 @@ Calculates future value of an investment
 END
                               )
   end
+
+  it 'returns friendly error message when rate option was send wrongly' do
+    run_command(
+      "stonehenge_bank future_value -p 1000 -i '3.89%' -n 2 -o 'year'"
+    )
+
+    expect(command_output).to match("There is an error with options used: ")
+  end
 end
