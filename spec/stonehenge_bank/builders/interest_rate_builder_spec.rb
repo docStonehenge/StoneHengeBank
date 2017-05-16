@@ -45,6 +45,14 @@ module StonehengeBank
           expect(result.value).to eql(0.0631)
           expect(result.period).to eql('monthly')
         end
+
+        it 'raises error if interest rate period is not valid' do
+          subject = described_class.new('3.89 foo')
+
+          expect {
+            subject.construct_interest_rate
+          }.to raise_error(Resources::InterestRate::InvalidRatePeriodError)
+        end
       end
     end
   end

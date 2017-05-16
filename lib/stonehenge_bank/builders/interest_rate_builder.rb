@@ -12,7 +12,9 @@ module StonehengeBank
       end
 
       def construct_interest_rate
-        Resources::InterestRate.new(rate_value, @rate[1])
+        Resources::InterestRate.new(rate_value, period = @rate[1]).tap do |rate|
+          rate.public_send("#{period}?")
+        end
       end
 
       private
