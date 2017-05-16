@@ -28,9 +28,9 @@ module StonehengeBank
         )
       end
 
-      def option_for_on
+      def option_for_periodicity
         method_option(
-          :on, type: :string, required: true,
+          :periodicity, type: :string, required: true,
           aliases: "-o", desc: banner_for_result_periodicity
         )
       end

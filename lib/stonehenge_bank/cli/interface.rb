@@ -8,11 +8,11 @@ module StonehengeBank
       extend CommandMacros
 
       desc 'future_value', 'Calculates future value of an investment'
-      define_method_options(:present_value, :rate, :period, :on, :verbose)
+      define_method_options(:present_value, :rate, :period, :periodicity, :verbose)
       def future_value
         investment  = Resources::Investment.new(present_value: options.dig('present_value'))
         equivalency = Calculators.const_get(
-          "#{options.dig('on').capitalize}InterestEquivalency"
+          "#{options.dig('periodicity').capitalize}InterestEquivalency"
         ).new(
           Builders::InterestRateBuilder.new(options.dig('rate')).construct_interest_rate
         )

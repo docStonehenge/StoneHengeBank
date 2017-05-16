@@ -4,7 +4,7 @@ describe 'Calculating future value of an investment', type: :aruba do
   context 'when asking for numbers only' do
     it 'returns correct future value, with full options names' do
       run_command(
-        "stonehenge_bank future_value --present_value=1000 --rate='3.89% monthly' --period=2 --on='year'"
+        "stonehenge_bank future_value --present_value=1000 --rate='3.89% monthly' --period=2 --periodicity='year'"
       )
 
       expect(command_output).to match("2499.02")
@@ -22,7 +22,7 @@ describe 'Calculating future value of an investment', type: :aruba do
   context 'when asking for verbosity' do
     it 'returns correct future value, with full options names' do
       run_command(
-        "stonehenge_bank future_value --present_value=1000 --rate='3.89% monthly' --period=2 --on='month' --verbose"
+        "stonehenge_bank future_value --present_value=1000 --rate='3.89% monthly' --period=2 --periodicity='month' --verbose"
       )
 
       expect(
@@ -81,7 +81,7 @@ describe 'Calculating future value of an investment', type: :aruba do
     )
 
     expect(command_output).to match(
-                                "No value provided for required options '--on'"
+                                "No value provided for required options '--periodicity'"
                               )
   end
 
@@ -93,13 +93,13 @@ describe 'Calculating future value of an investment', type: :aruba do
     expect(command_output).to eql(
                                 <<-END
 Usage:
-  stonehenge_bank future_value -i, --rate=RATE -n, --period=N -o, --on=ON -p, --present-value=N
+  stonehenge_bank future_value -i, --rate=RATE -n, --period=N -o, --periodicity=PERIODICITY -p, --present-value=N
 
 Options:
   -p, --present-value=N            #  amount in floating_point notation
   -i, --rate=RATE                  #  percentage amount and periodicity. LIKE: '2% annually'. Periodicity should be: 'annually', 'semiannually', 'quarterly', 'monthly', 'daily'.
   -n, --period=N                   #  amount in numeric notation
-  -o, --on=ON                      #  periodicity for result. Must be 'year', 'semester', 'trimester', 'month', 'day'
+  -o, --periodicity=PERIODICITY    #  periodicity for result. Must be 'year', 'semester', 'trimester', 'month', 'day'
   -v, [--verbose], [--no-verbose]\s\s
 
 Calculates future value of an investment
