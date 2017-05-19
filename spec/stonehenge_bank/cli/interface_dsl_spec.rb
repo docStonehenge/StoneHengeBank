@@ -133,6 +133,75 @@ module StonehengeBank
         end
       end
 
+      describe '#investment_rate verbosity' do
+        before do
+          subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
+          subject.an_investment with_present_value: 200, with_future_value: 2000
+          subject.on_period 2, :year
+
+          expect(
+            Decorators::InvestmentDecorator
+          ).to receive(:new).once.with(
+                 an_instance_of(Resources::Investment)
+               ).and_return decorator
+        end
+
+        context 'when verbosity is false' do
+          it 'calls #calculated_investment_rate on decorator instance' do
+            expect(decorator).to receive(
+                                   :calculated_investment_rate
+                                 ).once.with(2)
+
+            subject.investment_rate(false)
+          end
+        end
+
+        context 'when verbosity is true' do
+          it 'calls #calculated_investment_rate_with_message on decorator instance' do
+            expect(decorator).to receive(
+                                   :calculated_investment_rate_with_message
+                                 ).once.with(2)
+
+            subject.investment_rate(true)
+          end
+        end
+      end
+
+      describe '#regular_parcel verbosity' do
+        before do
+          subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
+          subject.an_investment with_present_value: 200, with_future_value: 2000
+          subject.with_interest_rate '2.38 monthly'
+          subject.on_period 2, :year
+
+          expect(
+            Decorators::InvestmentDecorator
+          ).to receive(:new).once.with(
+                 an_instance_of(Resources::Investment)
+               ).and_return decorator
+        end
+
+        context 'when verbosity is false' do
+          it 'calls #calculated_regular_parcel on decorator instance' do
+            expect(decorator).to receive(
+                                   :calculated_regular_parcel
+                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 2)
+
+            subject.regular_parcel(false)
+          end
+        end
+
+        context 'when verbosity is true' do
+          it 'calls #calculated_regular_parcel_with_message on decorator instance' do
+            expect(decorator).to receive(
+                                   :calculated_regular_parcel_with_message
+                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 2)
+
+            subject.regular_parcel(true)
+          end
+        end
+      end
+
       describe '#an_investment with_present_value: nil, with_future_value: nil' do
         it 'instantiates an Investment with proper args as instance variable' do
           investment = subject.an_investment(with_present_value: 100.0)

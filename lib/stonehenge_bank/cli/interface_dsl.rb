@@ -52,6 +52,20 @@ module StonehengeBank
         )
       end
 
+      def investment_rate(verbosity)
+        call_calculation_on_decorator_instance(
+          define_method_by_verbosity(:investment_rate, verbosity),
+          period
+        )
+      end
+
+      def regular_parcel(verbosity)
+        call_calculation_on_decorator_instance(
+          define_method_by_verbosity(:regular_parcel, verbosity),
+          equivalency, period
+        )
+      end
+
       private
 
       def call_calculation_on_decorator_instance(*args)
