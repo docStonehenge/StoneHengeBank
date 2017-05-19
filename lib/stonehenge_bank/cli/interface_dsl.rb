@@ -32,20 +32,31 @@ module StonehengeBank
       end
 
       def future_value(verbosity)
-        @calculation_klass.new(investment).public_send(
+        call_calculation_on_decorator_instance(
           define_method_by_verbosity(:future_value, verbosity),
           equivalency, period
         )
       end
 
       def present_value(verbosity)
-        @calculation_klass.new(investment).public_send(
+        call_calculation_on_decorator_instance(
           define_method_by_verbosity(:present_value, verbosity),
           equivalency, period
         )
       end
 
+      def investment_period(verbosity)
+        call_calculation_on_decorator_instance(
+          define_method_by_verbosity(:investment_period, verbosity),
+          equivalency
+        )
+      end
+
       private
+
+      def call_calculation_on_decorator_instance(*args)
+        @calculation_klass.new(investment).public_send(*args)
+      end
 
       def define_method_by_verbosity(calculation, verbosity)
         "calculated_#{calculation}".tap do |meth|

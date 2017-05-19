@@ -29,19 +29,21 @@ module StonehengeBank
       end
 
       describe '#future_value verbosity' do
+        before do
+          subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
+          subject.an_investment with_present_value: 2000
+          subject.with_interest_rate '2.14 annually'
+          subject.on_period 3, :year
+
+          expect(
+            Decorators::InvestmentDecorator
+          ).to receive(:new).once.with(
+                 an_instance_of(Resources::Investment)
+               ).and_return decorator
+        end
+
         context 'when verbosity is false' do
           it 'calls #calculated_future_value on decorator instance' do
-            subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
-            subject.an_investment with_present_value: 2000
-            subject.with_interest_rate '2.14 annually'
-            subject.on_period 3, :year
-
-            expect(
-              Decorators::InvestmentDecorator
-            ).to receive(:new).once.with(
-                   an_instance_of(Resources::Investment)
-                 ).and_return decorator
-
             expect(decorator).to receive(
                                    :calculated_future_value
                                  ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
@@ -52,17 +54,6 @@ module StonehengeBank
 
         context 'when verbosity is true' do
           it 'calls #calculated_future_value_with_message on decorator instance' do
-            subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
-            subject.an_investment with_present_value: 2000
-            subject.with_interest_rate '2.14 annually'
-            subject.on_period 3, :year
-
-            expect(
-              Decorators::InvestmentDecorator
-            ).to receive(:new).once.with(
-                   an_instance_of(Resources::Investment)
-                 ).and_return decorator
-
             expect(decorator).to receive(
                                    :calculated_future_value_with_message
                                  ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
@@ -73,19 +64,21 @@ module StonehengeBank
       end
 
       describe '#present_value verbosity' do
+        before do
+          subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
+          subject.an_investment with_future_value: 2000
+          subject.with_interest_rate '2.14 annually'
+          subject.on_period 3, :year
+
+          expect(
+            Decorators::InvestmentDecorator
+          ).to receive(:new).once.with(
+                 an_instance_of(Resources::Investment)
+               ).and_return decorator
+        end
+
         context 'when verbosity is false' do
           it 'calls #calculated_present_value on decorator instance' do
-            subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
-            subject.an_investment with_future_value: 2000
-            subject.with_interest_rate '2.14 annually'
-            subject.on_period 3, :year
-
-            expect(
-              Decorators::InvestmentDecorator
-            ).to receive(:new).once.with(
-                   an_instance_of(Resources::Investment)
-                 ).and_return decorator
-
             expect(decorator).to receive(
                                    :calculated_present_value
                                  ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
@@ -96,22 +89,46 @@ module StonehengeBank
 
         context 'when verbosity is true' do
           it 'calls #calculated_present_value_with_message on decorator instance' do
-            subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
-            subject.an_investment with_future_value: 2000
-            subject.with_interest_rate '2.14 annually'
-            subject.on_period 3, :year
-
-            expect(
-              Decorators::InvestmentDecorator
-            ).to receive(:new).once.with(
-                   an_instance_of(Resources::Investment)
-                 ).and_return decorator
-
             expect(decorator).to receive(
                                    :calculated_present_value_with_message
                                  ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
 
             subject.present_value(true)
+          end
+        end
+      end
+
+      describe '#investment_period verbosity' do
+        before do
+          subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
+          subject.an_investment with_present_value: 200, with_future_value: 2000
+          subject.with_interest_rate '2.14 annually'
+          subject.on_period :year
+
+          expect(
+            Decorators::InvestmentDecorator
+          ).to receive(:new).once.with(
+                 an_instance_of(Resources::Investment)
+               ).and_return decorator
+        end
+
+        context 'when verbosity is false' do
+          it 'calls #calculated_investment_period on decorator instance' do
+            expect(decorator).to receive(
+                                   :calculated_investment_period
+                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency))
+
+            subject.investment_period(false)
+          end
+        end
+
+        context 'when verbosity is true' do
+          it 'calls #calculated_investment_period_with_message on decorator instance' do
+            expect(decorator).to receive(
+                                   :calculated_investment_period_with_message
+                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency))
+
+            subject.investment_period(true)
           end
         end
       end
