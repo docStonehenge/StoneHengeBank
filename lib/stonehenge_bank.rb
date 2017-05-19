@@ -28,6 +28,8 @@ require "stonehenge_bank/formatters/investment_period_message_formatter"
 require "stonehenge_bank/formatters/investment_rate_message_formatter"
 require "stonehenge_bank/formatters/regular_parcel_message_formatter"
 
+require "stonehenge_bank/cli/interface_dsl"
+
 module StonehengeBank
 
 end
