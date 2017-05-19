@@ -18,6 +18,14 @@ module StonehengeBank
             subject.instance_variable_get(:@calculation_klass)
           ).to eql Decorators::InvestmentDecorator
         end
+
+        it 'returns any errors raised on evaluation' do
+          expect(
+            subject.simple_calculations do
+              with_interest_rate '2.14'
+            end
+          ).to match /Interest rate used is not parseable/
+        end
       end
 
       describe '#future_value verbosity' do
@@ -62,15 +70,48 @@ module StonehengeBank
             subject.future_value(true)
           end
         end
+      end
 
-        context 'when calculations goes on error' do
-          it 'returns error message' do
+      describe '#present_value verbosity' do
+        context 'when verbosity is false' do
+          it 'calls #calculated_present_value on decorator instance' do
             subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
-            subject.an_investment
+            subject.an_investment with_future_value: 2000
             subject.with_interest_rate '2.14 annually'
             subject.on_period 3, :year
 
-            expect(subject.future_value(false)).to match /Cannot calculate/
+            expect(
+              Decorators::InvestmentDecorator
+            ).to receive(:new).once.with(
+                   an_instance_of(Resources::Investment)
+                 ).and_return decorator
+
+            expect(decorator).to receive(
+                                   :calculated_present_value
+                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
+
+            subject.present_value(false)
+          end
+        end
+
+        context 'when verbosity is true' do
+          it 'calls #calculated_present_value_with_message on decorator instance' do
+            subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
+            subject.an_investment with_future_value: 2000
+            subject.with_interest_rate '2.14 annually'
+            subject.on_period 3, :year
+
+            expect(
+              Decorators::InvestmentDecorator
+            ).to receive(:new).once.with(
+                   an_instance_of(Resources::Investment)
+                 ).and_return decorator
+
+            expect(decorator).to receive(
+                                   :calculated_present_value_with_message
+                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
+
+            subject.present_value(true)
           end
         end
       end

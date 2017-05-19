@@ -6,6 +6,8 @@ module StonehengeBank
       def simple_calculations(&block)
         @calculation_klass = Decorators::InvestmentDecorator
         instance_eval(&block)
+      rescue => e
+        e.message
       end
 
       def an_investment(with_present_value: nil, with_future_value: nil)
@@ -30,13 +32,25 @@ module StonehengeBank
       end
 
       def future_value(verbosity)
-        method = "calculated_future_value".tap do |meth|
+        @calculation_klass.new(investment).public_send(
+          define_method_by_verbosity(:future_value, verbosity),
+          equivalency, period
+        )
+      end
+
+      def present_value(verbosity)
+        @calculation_klass.new(investment).public_send(
+          define_method_by_verbosity(:present_value, verbosity),
+          equivalency, period
+        )
+      end
+
+      private
+
+      def define_method_by_verbosity(calculation, verbosity)
+        "calculated_#{calculation}".tap do |meth|
           meth << "_with_message" if verbosity
         end
-
-        @calculation_klass.new(investment).public_send(method, equivalency, period)
-      rescue => e
-        e.message
       end
     end
   end
