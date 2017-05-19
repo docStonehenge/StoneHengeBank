@@ -10,13 +10,68 @@ module StonehengeBank
       let(:decorator)     { double(:decorator) }
       let(:dsl_object)    { double(:dsl) }
 
-      describe '#simple_calculations' do
+      describe '#simple_calculations &block' do
         it 'sets up instance calculation_klass as InvestmentDecorator and yields' do
           expect { |b| subject.simple_calculations(&b) }.to yield_control
 
           expect(
             subject.instance_variable_get(:@calculation_klass)
           ).to eql Decorators::InvestmentDecorator
+        end
+      end
+
+      describe '#future_value verbosity' do
+        context 'when verbosity is false' do
+          it 'calls #calculated_future_value on decorator instance' do
+            subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
+            subject.an_investment with_present_value: 2000
+            subject.with_interest_rate '2.14 annually'
+            subject.on_period 3, :year
+
+            expect(
+              Decorators::InvestmentDecorator
+            ).to receive(:new).once.with(
+                   an_instance_of(Resources::Investment)
+                 ).and_return decorator
+
+            expect(decorator).to receive(
+                                   :calculated_future_value
+                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
+
+            subject.future_value(false)
+          end
+        end
+
+        context 'when verbosity is true' do
+          it 'calls #calculated_future_value_with_message on decorator instance' do
+            subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
+            subject.an_investment with_present_value: 2000
+            subject.with_interest_rate '2.14 annually'
+            subject.on_period 3, :year
+
+            expect(
+              Decorators::InvestmentDecorator
+            ).to receive(:new).once.with(
+                   an_instance_of(Resources::Investment)
+                 ).and_return decorator
+
+            expect(decorator).to receive(
+                                   :calculated_future_value_with_message
+                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
+
+            subject.future_value(true)
+          end
+        end
+
+        context 'when calculations goes on error' do
+          it 'returns error message' do
+            subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
+            subject.an_investment
+            subject.with_interest_rate '2.14 annually'
+            subject.on_period 3, :year
+
+            expect(subject.future_value(false)).to match /Cannot calculate/
+          end
         end
       end
 

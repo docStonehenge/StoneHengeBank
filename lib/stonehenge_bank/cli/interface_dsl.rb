@@ -28,6 +28,16 @@ module StonehengeBank
           "#{periodicity.capitalize}InterestEquivalency"
         ).new(interest_rate) if interest_rate
       end
+
+      def future_value(verbosity)
+        method = "calculated_future_value".tap do |meth|
+          meth << "_with_message" if verbosity
+        end
+
+        @calculation_klass.new(investment).public_send(method, equivalency, period)
+      rescue => e
+        e.message
+      end
     end
   end
 end
