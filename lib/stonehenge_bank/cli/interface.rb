@@ -12,7 +12,7 @@ module StonehengeBank
       def future_value
         opt    = options
 
-        result = InterfaceDSL.new.simple_calculations do
+        result = InterfaceDSL.simple_calculations do
           an_investment      with_present_value: opt.dig('present_value')
           with_interest_rate opt.dig('rate')
           on_period          opt.dig('period'), opt.dig('periodicity')
