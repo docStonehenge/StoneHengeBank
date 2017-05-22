@@ -28,7 +28,7 @@ module StonehengeBank
         end
       end
 
-      describe '#future_value verbosity' do
+      describe '#future_value verbose:' do
         before do
           subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_present_value: 2000
@@ -48,7 +48,7 @@ module StonehengeBank
                                    :calculated_future_value
                                  ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
 
-            subject.future_value(false)
+            subject.future_value(verbose: false)
           end
         end
 
@@ -58,12 +58,12 @@ module StonehengeBank
                                    :calculated_future_value_with_message
                                  ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
 
-            subject.future_value(true)
+            subject.future_value(verbose: true)
           end
         end
       end
 
-      describe '#present_value verbosity' do
+      describe '#present_value verbose:' do
         before do
           subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_future_value: 2000
@@ -83,7 +83,7 @@ module StonehengeBank
                                    :calculated_present_value
                                  ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
 
-            subject.present_value(false)
+            subject.present_value(verbose: false)
           end
         end
 
@@ -93,7 +93,7 @@ module StonehengeBank
                                    :calculated_present_value_with_message
                                  ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
 
-            subject.present_value(true)
+            subject.present_value(verbose: true)
           end
         end
       end
@@ -118,7 +118,7 @@ module StonehengeBank
                                    :calculated_investment_period
                                  ).once.with(an_instance_of(Calculators::YearInterestEquivalency))
 
-            subject.investment_period(false)
+            subject.investment_period(verbose: false)
           end
         end
 
@@ -128,12 +128,12 @@ module StonehengeBank
                                    :calculated_investment_period_with_message
                                  ).once.with(an_instance_of(Calculators::YearInterestEquivalency))
 
-            subject.investment_period(true)
+            subject.investment_period(verbose: true)
           end
         end
       end
 
-      describe '#investment_rate verbosity' do
+      describe '#investment_rate verbose:' do
         before do
           subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_present_value: 200, with_future_value: 2000
@@ -152,7 +152,7 @@ module StonehengeBank
                                    :calculated_investment_rate
                                  ).once.with(2)
 
-            subject.investment_rate(false)
+            subject.investment_rate(verbose: false)
           end
         end
 
@@ -162,12 +162,12 @@ module StonehengeBank
                                    :calculated_investment_rate_with_message
                                  ).once.with(2)
 
-            subject.investment_rate(true)
+            subject.investment_rate(verbose: true)
           end
         end
       end
 
-      describe '#regular_parcel verbosity' do
+      describe '#regular_parcel verbose:' do
         before do
           subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_present_value: 200, with_future_value: 2000
@@ -187,7 +187,7 @@ module StonehengeBank
                                    :calculated_regular_parcel
                                  ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 2)
 
-            subject.regular_parcel(false)
+            subject.regular_parcel(verbose: false)
           end
         end
 
@@ -197,7 +197,7 @@ module StonehengeBank
                                    :calculated_regular_parcel_with_message
                                  ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 2)
 
-            subject.regular_parcel(true)
+            subject.regular_parcel(verbose: true)
           end
         end
       end

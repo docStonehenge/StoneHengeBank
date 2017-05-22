@@ -31,37 +31,37 @@ module StonehengeBank
         ).new(interest_rate) if interest_rate
       end
 
-      def future_value(verbosity)
+      def future_value(verbose:)
         call_calculation_on_decorator_instance(
-          define_method_by_verbosity(:future_value, verbosity),
+          define_method_by_verbosity(:future_value, verbose),
           equivalency, period
         )
       end
 
-      def present_value(verbosity)
+      def present_value(verbose:)
         call_calculation_on_decorator_instance(
-          define_method_by_verbosity(:present_value, verbosity),
+          define_method_by_verbosity(:present_value, verbose),
           equivalency, period
         )
       end
 
-      def investment_period(verbosity)
+      def investment_period(verbose:)
         call_calculation_on_decorator_instance(
-          define_method_by_verbosity(:investment_period, verbosity),
+          define_method_by_verbosity(:investment_period, verbose),
           equivalency
         )
       end
 
-      def investment_rate(verbosity)
+      def investment_rate(verbose:)
         call_calculation_on_decorator_instance(
-          define_method_by_verbosity(:investment_rate, verbosity),
+          define_method_by_verbosity(:investment_rate, verbose),
           period
         )
       end
 
-      def regular_parcel(verbosity)
+      def regular_parcel(verbose:)
         call_calculation_on_decorator_instance(
-          define_method_by_verbosity(:regular_parcel, verbosity),
+          define_method_by_verbosity(:regular_parcel, verbose),
           equivalency, period
         )
       end
