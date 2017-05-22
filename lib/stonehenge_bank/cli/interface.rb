@@ -10,27 +10,16 @@ module StonehengeBank
       desc 'future_value', 'Calculates future value of an investment'
       define_method_options(:present_value, :rate, :period, :periodicity, :verbose)
       def future_value
-        investment  = Resources::Investment.new(present_value: options.dig('present_value'))
-        equivalency = Calculators.const_get(
-          "#{options.dig('periodicity').capitalize}InterestEquivalency"
-        ).new(
-          Builders::InterestRateBuilder.new(options.dig('rate')).construct_interest_rate
-        )
+        opt = options
 
-        print Decorators::InvestmentDecorator.new(investment).public_send(
-                determine_method_by_verbosity(:future_value),
-                equivalency,
-                options.dig('period').to_i
-              )
-      rescue => e
-        print "There is an error with options used: #{e.message}"
-      end
+        result = InterfaceDSL.new.simple_calculations do
+          an_investment      with_present_value: opt.dig('present_value')
+          with_interest_rate opt.dig('rate')
+          on_period          opt.dig('period'), opt.dig('periodicity')
+          future_value       verbose: opt.dig('verbose')
+        end
 
-      private
-
-      def determine_method_by_verbosity(calculation)
-        return "calculated_#{calculation}_with_message" if options.dig('verbose')
-        "calculated_#{calculation}"
+        print result
       end
     end
   end

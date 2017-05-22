@@ -75,7 +75,7 @@ describe 'Calculating future value of an investment', type: :aruba do
                               )
   end
 
-  it 'returns message for missing --on option when not provided' do
+  it 'returns message for missing --periodicity option when not provided' do
     run_command(
       "stonehenge_bank future_value -p 1000 -i '3.89% annually' -n 2"
     )
@@ -112,14 +112,14 @@ END
       "stonehenge_bank future_value -p 1000 -i '3.89%' -n 2 -o 'year'"
     )
 
-    expect(command_output).to match("There is an error with options used: ")
+    expect(command_output).to match("Interest rate used is not parseable.")
   end
 
-  it 'returns friendly error message when rate option was send incomplete' do
+  it 'returns friendly error message when rate option was send wrongly' do
     run_command(
       "stonehenge_bank future_value -p 1000 -i '3.89% month' -n 2 -o 'year'"
     )
 
-    expect(command_output).to match("There is an error with options used: Invalid value for interest rate.")
+    expect(command_output).to match("Invalid value for interest rate.")
   end
 end
