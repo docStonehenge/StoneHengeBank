@@ -26,9 +26,9 @@ module StonehengeBank
       def on_period(period = nil, periodicity)
         @period      = period
 
-        @equivalency = Calculators.const_get(
-          "#{periodicity.capitalize}InterestEquivalency"
-        ).new(interest_rate) if interest_rate
+        @equivalency = Calculators::InterestEquivalency.get_equivalency_for(
+          periodicity, interest_rate
+        ) if interest_rate
       end
 
       def future_value(verbose:)

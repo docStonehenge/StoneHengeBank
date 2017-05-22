@@ -10,7 +10,7 @@ module StonehengeBank
       desc 'future_value', 'Calculates future value of an investment'
       define_method_options(:present_value, :rate, :period, :periodicity, :verbose)
       def future_value
-        opt = options
+        opt    = options
 
         result = InterfaceDSL.new.simple_calculations do
           an_investment      with_present_value: opt.dig('present_value')

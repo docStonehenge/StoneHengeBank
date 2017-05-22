@@ -122,4 +122,12 @@ END
 
     expect(command_output).to match("Invalid value for interest rate.")
   end
+
+  it 'returns friendly error message when periodicity option is invalid' do
+    run_command(
+      "stonehenge_bank future_value -p 1000 -i '3.89% monthly' -n 2 -o 'foo'"
+    )
+
+    expect(command_output).to match("An attempt was made to set equivalency with invalid value.")
+  end
 end
