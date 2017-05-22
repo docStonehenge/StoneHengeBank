@@ -1,6 +1,6 @@
 module StonehengeBank
   module Cli
-    class InterfaceDSL
+    module InterfaceDSL
       def self.simple_calculations(&block)
         SimpleCalculationsBuilder.new.instance_eval(&block)
       rescue => e
