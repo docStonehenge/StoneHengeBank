@@ -14,6 +14,13 @@ module StonehengeBank
         )
       end
 
+      def option_for_future_value
+        method_option(
+          :future_value, type: :numeric, required: true,
+          aliases: "-f", desc: banner_for_values(:floating_point)
+        )
+      end
+
       def option_for_period
         method_option(
           :period, type: :numeric, required: true,
