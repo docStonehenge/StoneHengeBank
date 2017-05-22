@@ -11,6 +11,7 @@ require "stonehenge_bank/calculators/payback"
 require "stonehenge_bank/calculators/payback_returns/simple"
 require "stonehenge_bank/calculators/payback_returns/discounted"
 require "stonehenge_bank/calculators/cash_flow_calculation_error"
+require "stonehenge_bank/calculators/invalid_interest_equivalency_error"
 require "stonehenge_bank/calculators/interest_equivalency"
 require "stonehenge_bank/calculators/year_interest_equivalency"
 require 'stonehenge_bank/calculators/semester_interest_equivalency'
