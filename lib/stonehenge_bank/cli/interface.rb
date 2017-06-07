@@ -36,6 +36,21 @@ module StonehengeBank
 
         print result
       end
+
+      desc 'investment_period', 'Calculates the period for investment return'
+      define_method_options(:present_value, :future_value, :rate, :periodicity, :verbose)
+      def investment_period
+        opt = options
+
+        result = InterfaceDSL.simple_calculations do
+          an_investment with_present_value: opt.dig('present_value'), with_future_value: opt.dig('future_value')
+          with_interest_rate opt.dig('rate')
+          on_period          opt.dig('periodicity')
+          investment_period  verbose: opt.dig('verbose')
+        end
+
+        print result
+      end
     end
   end
 end

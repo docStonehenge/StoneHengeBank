@@ -10,7 +10,7 @@ describe 'Calculating present value of an investment', type: :aruba do
       expect(command_output).to match("400.16")
     end
 
-    it 'returns correct future value, with aliases options' do
+    it 'returns correct present value, with aliases options' do
       run_command(
         "stonehenge_bank present_value -f 1000 -i '3.89% monthly' -n 2 -o 'year'"
       )
