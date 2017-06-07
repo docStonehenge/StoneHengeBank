@@ -28,7 +28,7 @@ describe 'Calculating future value of an investment', type: :aruba do
       expect(
         command_output
       ).to match(
-             "An investment with a present value of $1000, with an interest rate of 3.89%, on a period of 2 month(s), returns a future value of $1079.31."
+             "An investment with a present value of $1000, with an interest rate of 3.89%, on a period of 2 month(s), returns a future value of $1079.31.\n"
            )
     end
 
@@ -40,7 +40,7 @@ describe 'Calculating future value of an investment', type: :aruba do
       expect(
         command_output
       ).to match(
-             "An investment with a present value of $1000, with an interest rate of 3.89%, on a period of 2 month(s), returns a future value of $1079.31."
+             "An investment with a present value of $1000, with an interest rate of 3.89%, on a period of 2 month(s), returns a future value of $1079.31.\n"
            )
     end
   end

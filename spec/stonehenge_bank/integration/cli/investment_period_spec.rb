@@ -28,7 +28,7 @@ describe 'Calculating the necessary period for investment return', type: :aruba 
       expect(
         command_output
       ).to match(
-             "An investment has present value of $100, has future value of $1000, with an interest rate of 58.08%, on a period of 6 year(s)."
+             "An investment has present value of $100, has future value of $1000, with an interest rate of 58.08%, on a period of 6 year(s).\n"
            )
     end
 
@@ -40,7 +40,7 @@ describe 'Calculating the necessary period for investment return', type: :aruba 
       expect(
         command_output
       ).to match(
-             "An investment has present value of $100, has future value of $1000, with an interest rate of 58.08%, on a period of 6 year(s)."
+             "An investment has present value of $100, has future value of $1000, with an interest rate of 58.08%, on a period of 6 year(s).\n"
            )
     end
   end

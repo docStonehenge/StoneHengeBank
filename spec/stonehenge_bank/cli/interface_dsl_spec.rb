@@ -10,16 +10,18 @@ module StonehengeBank
       let(:decorator)     { double(:decorator) }
       let(:dsl_object)    { double(:dsl) }
 
-      describe '.simple_calculations &block' do
+      describe '.simple_calculations with_options:, &block' do
         it 'sets SimpleCalculationsBuilder and yields to receive its commands' do
-          expect(SimpleCalculationsBuilder).to receive(:new).once
+          expect(SimpleCalculationsBuilder).to receive(:new).once.with({})
 
-          expect { |b| described_class.simple_calculations(&b) }.to yield_control
+          expect do |b|
+            described_class.simple_calculations(with_options: {}, &b)
+          end.to yield_control
         end
 
         it 'returns any errors raised on evaluation' do
           expect(
-            described_class.simple_calculations do
+            described_class.simple_calculations(with_options: {}) do
               with_interest_rate '2.14'
             end
           ).to match /Interest rate used is not parseable/

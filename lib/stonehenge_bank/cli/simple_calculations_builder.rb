@@ -1,10 +1,11 @@
 module StonehengeBank
   module Cli
     class SimpleCalculationsBuilder
-      attr_reader :investment, :interest_rate, :period, :equivalency
+      attr_reader :options, :investment, :interest_rate, :period, :equivalency
 
-      def initialize
+      def initialize(options)
         @calculation_klass = Decorators::InvestmentDecorator
+        @options           = options
       end
 
       def an_investment(with_present_value: nil, with_future_value: nil)

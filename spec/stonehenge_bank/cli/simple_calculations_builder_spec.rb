@@ -10,11 +10,16 @@ module StonehengeBank
       let(:decorator)     { double(:decorator) }
 
       specify do
-        builder = described_class.new
+        builder = described_class.new({})
+
         expect(
           builder.instance_variable_get(:@calculation_klass)
         ).to eql Decorators::InvestmentDecorator
+
+        expect(builder).to have_attributes options: {}
       end
+
+      subject { described_class.new({}) }
 
       describe '#an_investment with_present_value: nil, with_future_value: nil' do
         it 'instantiates an Investment with proper args as instance variable' do
