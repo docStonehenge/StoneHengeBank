@@ -45,6 +45,18 @@ module StonehengeBank
 
         puts result
       end
+
+      desc 'investment_rate', 'Calculates rate for investment return'
+      define_method_options(:present_value, :future_value, :period, :verbose)
+      def investment_rate
+        result = InterfaceDSL.simple_calculations(with_options: options) do
+          an_investment with_present_value: options.dig('present_value'), with_future_value: options.dig('future_value')
+          return_on          period_of: options.dig('period')
+          investment_rate    verbose: options.dig('verbose')
+        end
+
+        puts result
+      end
     end
   end
 end
