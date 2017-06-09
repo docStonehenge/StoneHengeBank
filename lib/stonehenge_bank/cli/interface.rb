@@ -13,7 +13,7 @@ module StonehengeBank
         result = InterfaceDSL.simple_calculations(with_options: options) do
           an_investment      with_present_value: options.dig('present_value')
           with_interest_rate options.dig('rate')
-          on_period          options.dig('period'), options.dig('periodicity')
+          return_on          period_of: options.dig('period'), as: options.dig('periodicity')
           future_value       verbose: options.dig('verbose')
         end
 
@@ -26,7 +26,7 @@ module StonehengeBank
         result = InterfaceDSL.simple_calculations(with_options: options) do
           an_investment      with_future_value: options.dig('future_value')
           with_interest_rate options.dig('rate')
-          on_period          options.dig('period'), options.dig('periodicity')
+          return_on          period_of: options.dig('period'), as: options.dig('periodicity')
           present_value      verbose: options.dig('verbose')
         end
 
@@ -39,7 +39,7 @@ module StonehengeBank
         result = InterfaceDSL.simple_calculations(with_options: options) do
           an_investment with_present_value: options.dig('present_value'), with_future_value: options.dig('future_value')
           with_interest_rate options.dig('rate')
-          on_period          options.dig('periodicity')
+          return_on          as: options.dig('periodicity')
           investment_period  verbose: options.dig('verbose')
         end
 

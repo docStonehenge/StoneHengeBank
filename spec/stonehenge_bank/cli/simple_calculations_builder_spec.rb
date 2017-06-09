@@ -41,28 +41,66 @@ module StonehengeBank
         end
       end
 
-      describe '#on_period period, periodicity' do
-        it 'sets up period instance variable and instantiates a proper equivalency' do
-          subject.with_interest_rate('2.48 annually')
-          subject.on_period 3, :month
+      describe '#return_on options' do
+        context 'when interest rate is present' do
+          context 'when period_of and as options are present' do
+            it 'sets up period instance variable and instantiates a proper equivalency' do
+              subject.with_interest_rate('2.48 annually')
+              subject.return_on period_of: 3, as: :month
 
-          expect(subject.period).to eql 3
-          expect(subject.equivalency).to be_an_instance_of(Calculators::MonthInterestEquivalency)
+              expect(subject.period).to eql 3
+              expect(subject.equivalency).to be_an_instance_of(Calculators::MonthInterestEquivalency)
+            end
+          end
+
+          context 'when only as option is present' do
+            it "just sets equivalency" do
+              subject.with_interest_rate('2.48 annually')
+              subject.return_on as: :trimester
+
+              expect(subject.period).to be_nil
+              expect(subject.equivalency).to be_an_instance_of(Calculators::TrimesterInterestEquivalency)
+            end
+          end
+
+          context 'when only period_of option is present' do
+            it "just sets period" do
+              subject.with_interest_rate('2.48 annually')
+              subject.return_on period_of: 3
+
+              expect(subject.period).to eql 3
+              expect(subject.equivalency).to be_nil
+            end
+          end
         end
 
-        it "doesn't set up equivalency when interest_rate isn't present" do
-          subject.on_period 3, :month
+        context 'when interest rate is not present' do
+          context 'when period_of option is present' do
+            it "just sets period" do
+              subject.return_on period_of: 3
 
-          expect(subject.period).to eql 3
-          expect(subject.equivalency).to be_nil
-        end
+              expect(subject.period).to eql 3
+              expect(subject.equivalency).to be_nil
+            end
+          end
 
-        it "doesn't set period when it isn't present" do
-          subject.with_interest_rate('2.48 annually')
-          subject.on_period :trimester
+          context 'when period_of and as options are present' do
+            it "just sets period" do
+              subject.return_on period_of: 3, as: :year
 
-          expect(subject.period).to be_nil
-          expect(subject.equivalency).to be_an_instance_of(Calculators::TrimesterInterestEquivalency)
+              expect(subject.period).to eql 3
+              expect(subject.equivalency).to be_nil
+            end
+          end
+
+          context 'when only as option is present' do
+            it "doesn't set period nor equivalency" do
+              subject.return_on as: :year
+
+              expect(subject.period).to be_nil
+              expect(subject.equivalency).to be_nil
+            end
+          end
         end
       end
 
@@ -71,7 +109,7 @@ module StonehengeBank
           subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_present_value: 2000
           subject.with_interest_rate '2.14 annually'
-          subject.on_period 3, :year
+          subject.return_on period_of: 3, as: :year
 
           expect(
             Decorators::InvestmentDecorator
@@ -106,7 +144,7 @@ module StonehengeBank
           subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_future_value: 2000
           subject.with_interest_rate '2.14 annually'
-          subject.on_period 3, :year
+          subject.return_on period_of: 3, as: :year
 
           expect(
             Decorators::InvestmentDecorator
@@ -141,7 +179,7 @@ module StonehengeBank
           subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_present_value: 200, with_future_value: 2000
           subject.with_interest_rate '2.14 annually'
-          subject.on_period :year
+          subject.return_on as: :year
 
           expect(
             Decorators::InvestmentDecorator
@@ -175,7 +213,7 @@ module StonehengeBank
         before do
           subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_present_value: 200, with_future_value: 2000
-          subject.on_period 2, :year
+          subject.return_on period_of: 2
 
           expect(
             Decorators::InvestmentDecorator
@@ -210,7 +248,7 @@ module StonehengeBank
           subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_present_value: 200, with_future_value: 2000
           subject.with_interest_rate '2.38 monthly'
-          subject.on_period 2, :year
+          subject.return_on period_of: 2, as: :year
 
           expect(
             Decorators::InvestmentDecorator

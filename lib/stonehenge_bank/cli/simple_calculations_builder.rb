@@ -21,12 +21,12 @@ module StonehengeBank
         ).construct_interest_rate
       end
 
-      def on_period(period = nil, periodicity)
-        @period      = period
+      def return_on(options)
+        @period      = options.delete(:period_of)
 
         @equivalency = Calculators::InterestEquivalency.get_equivalency_for(
-          periodicity, interest_rate
-        ) if interest_rate
+          options.delete(:as), interest_rate
+        ) if options[:as] and interest_rate
       end
 
       def future_value(verbose:)
