@@ -57,6 +57,19 @@ module StonehengeBank
 
         puts result
       end
+
+      desc 'regular_parcel', 'Calculates the regular parcel returned from an investment'
+      define_method_options(:present_value, :future_value, :rate, :period, :periodicity, :verbose)
+      def regular_parcel
+        result = InterfaceDSL.simple_calculations(with_options: options) do
+          an_investment with_present_value: options.dig('present_value'), with_future_value: options.dig('future_value')
+          with_interest_rate options.dig('rate')
+          return_on          period_of: options.dig('period'), as: options.dig('periodicity')
+          regular_parcel     verbose: options.dig('verbose')
+        end
+
+        puts result
+      end
     end
   end
 end
