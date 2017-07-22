@@ -10,12 +10,12 @@ module StonehengeBank
       let(:decorator)     { double(:decorator) }
       let(:dsl_object)    { double(:dsl) }
 
-      describe '.simple_calculations with_options:, &block' do
+      describe '.simple_calculations with_options: {}, &block' do
         it 'sets SimpleCalculationsBuilder and yields to receive its commands' do
           expect(SimpleCalculationsBuilder).to receive(:new).once.with({})
 
           expect do |b|
-            described_class.simple_calculations(with_options: {}, &b)
+            described_class.simple_calculations(&b)
           end.to yield_control
         end
 
