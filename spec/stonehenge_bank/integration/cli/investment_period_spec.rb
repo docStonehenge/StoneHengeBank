@@ -7,7 +7,7 @@ describe 'Calculating the necessary period for investment return', type: :aruba 
         "stonehenge_bank investment_period --present_value=100 --future_value=1000 --rate='3.89% monthly' --periodicity=year"
       )
 
-      expect(command_output).to match("6")
+      expect(command_output).to match("5.03")
     end
 
     it 'returns correct period value, with aliases options' do
@@ -15,7 +15,7 @@ describe 'Calculating the necessary period for investment return', type: :aruba 
         "stonehenge_bank investment_period -p 100 -f 1000 -i '3.89% monthly' -o 'year'"
       )
 
-      expect(command_output).to match("6")
+      expect(command_output).to match("5.03")
     end
   end
 
@@ -28,7 +28,7 @@ describe 'Calculating the necessary period for investment return', type: :aruba 
       expect(
         command_output
       ).to match(
-             "An investment has present value of $100, has future value of $1000, with an interest rate of 58.08%, on a period of 6 year(s).\n"
+             "An investment has present value of $100, has future value of $1000, with an interest rate of 58.08%, on a period of 5.03 year(s).\n"
            )
     end
 
@@ -40,7 +40,7 @@ describe 'Calculating the necessary period for investment return', type: :aruba 
       expect(
         command_output
       ).to match(
-             "An investment has present value of $100, has future value of $1000, with an interest rate of 58.08%, on a period of 6 year(s).\n"
+             "An investment has present value of $100, has future value of $1000, with an interest rate of 58.08%, on a period of 5.03 year(s).\n"
            )
     end
   end

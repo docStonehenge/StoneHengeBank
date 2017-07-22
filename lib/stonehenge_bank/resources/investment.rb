@@ -28,8 +28,8 @@ module StonehengeBank
       def calculated_investment_period(equivalency)
         check_investment_values!(:period)
 
-        (Math.log(future_value/present_value) /
-          Math.log(neutralized_rate_for(equivalency))).ceil
+        (Math.log(future_value.to_f/present_value.to_f) /
+         Math.log(neutralized_rate_for(equivalency))).round(2)
       end
 
       def calculated_investment_rate(period)
