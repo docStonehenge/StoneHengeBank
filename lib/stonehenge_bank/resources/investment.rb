@@ -60,7 +60,7 @@ module StonehengeBank
       def check_investment_values!(calculation_type)
         unless present_value && future_value
           raise ::UncalculableInvestmentValueError,
-                "Cannot calculate #{calculation_type.to_s.gsub('_', ' ')} with null values."
+                "Cannot calculate #{calculation_type.to_s.tr('_', ' ')} with null values."
         end
       end
     end
