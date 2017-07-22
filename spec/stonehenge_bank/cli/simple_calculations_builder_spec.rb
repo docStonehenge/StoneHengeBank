@@ -41,9 +41,9 @@ module StonehengeBank
         end
       end
 
-      describe '#return_on options' do
+      describe '#return_on periodicity' do
         context 'when interest rate is present' do
-          context 'when period_of and as options are present' do
+          context 'when period_of and as periodicity values are present' do
             it 'sets up period instance variable and instantiates a proper equivalency' do
               subject.with_interest_rate('2.48 annually')
               subject.return_on period_of: 3, as: :month
@@ -53,7 +53,7 @@ module StonehengeBank
             end
           end
 
-          context 'when only as option is present' do
+          context 'when only as periodicity value is present' do
             it "just sets equivalency" do
               subject.with_interest_rate('2.48 annually')
               subject.return_on as: :trimester
@@ -63,7 +63,7 @@ module StonehengeBank
             end
           end
 
-          context 'when only period_of option is present' do
+          context 'when only period_of periodicity value is present' do
             it "just sets period" do
               subject.with_interest_rate('2.48 annually')
               subject.return_on period_of: 3
@@ -75,7 +75,7 @@ module StonehengeBank
         end
 
         context 'when interest rate is not present' do
-          context 'when period_of option is present' do
+          context 'when period_of periodicity value is present' do
             it "just sets period" do
               subject.return_on period_of: 3
 
@@ -84,7 +84,7 @@ module StonehengeBank
             end
           end
 
-          context 'when period_of and as options are present' do
+          context 'when period_of and as periodicity values are present' do
             it "just sets period" do
               subject.return_on period_of: 3, as: :year
 
@@ -93,7 +93,7 @@ module StonehengeBank
             end
           end
 
-          context 'when only as option is present' do
+          context 'when only as periodicity value is present' do
             it "doesn't set period nor equivalency" do
               subject.return_on as: :year
 
