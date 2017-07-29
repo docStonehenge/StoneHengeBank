@@ -3,6 +3,8 @@ require 'spec_helper'
 module StonehengeBank
   module Cli
     describe SimpleCalculationsBuilder do
+      it_behaves_like 'a DSL equivalency resolver'
+
       let(:investment)    { double(:investment) }
       let(:interest_rate) { double(:interest_rate) }
       let(:rate_builder)  { double(:interest_rate_builder) }
@@ -32,15 +34,6 @@ module StonehengeBank
         end
       end
 
-      describe '#with_interest_rate rate_description' do
-        it 'instantiates an InterestRate using builder as instance variable' do
-          interest_rate = subject.with_interest_rate('2.48 annually')
-
-          expect(subject.interest_rate).to eql interest_rate
-          expect(interest_rate).to be_an_instance_of(Resources::InterestRate)
-        end
-      end
-
       describe '#return_on periodicity' do
         context 'when interest rate is present' do
           context 'when period_of and as periodicity values are present' do
@@ -49,17 +42,9 @@ module StonehengeBank
               subject.return_on period_of: 3, as: :month
 
               expect(subject.period).to eql 3
-              expect(subject.equivalency).to be_an_instance_of(Calculators::MonthInterestEquivalency)
-            end
-          end
-
-          context 'when only as periodicity value is present' do
-            it "just sets equivalency" do
-              subject.with_interest_rate('2.48 annually')
-              subject.return_on as: :trimester
-
-              expect(subject.period).to be_nil
-              expect(subject.equivalency).to be_an_instance_of(Calculators::TrimesterInterestEquivalency)
+              expect(subject.equivalency).to be_an_instance_of(
+                                               StonehengeBank::Calculators::MonthInterestEquivalency
+                                             )
             end
           end
 
@@ -75,7 +60,7 @@ module StonehengeBank
         end
 
         context 'when interest rate is not present' do
-          context 'when period_of periodicity value is present' do
+          context 'when only period_of periodicity value is present' do
             it "just sets period" do
               subject.return_on period_of: 3
 
@@ -89,15 +74,6 @@ module StonehengeBank
               subject.return_on period_of: 3, as: :year
 
               expect(subject.period).to eql 3
-              expect(subject.equivalency).to be_nil
-            end
-          end
-
-          context 'when only as periodicity value is present' do
-            it "doesn't set period nor equivalency" do
-              subject.return_on as: :year
-
-              expect(subject.period).to be_nil
               expect(subject.equivalency).to be_nil
             end
           end

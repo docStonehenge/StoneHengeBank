@@ -28,7 +28,7 @@ module StonehengeBank
 
       def with_cash_flow_calculation_handling_for(investment)
         if investment.future_value.nil?
-          raise CashFlowCalculationError,
+          raise Resources::CashFlowError,
                 'An error occurred on Payback calculation due to cash flow inconsistencies.'
         end
 

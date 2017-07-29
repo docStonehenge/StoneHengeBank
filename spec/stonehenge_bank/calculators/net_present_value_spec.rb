@@ -28,7 +28,7 @@ module StonehengeBank
 
           expect {
             subject.calculate(cash_flow, using_equivalency: year_interest_equivalency)
-          }.to raise_error(CashFlowCalculationError, 'An error occurred on Net Present Value calculation due to cash flow inconsistencies.')
+          }.to raise_error(Resources::CashFlowError, 'An error occurred on Net Present Value calculation due to cash flow inconsistencies.')
         end
       end
     end

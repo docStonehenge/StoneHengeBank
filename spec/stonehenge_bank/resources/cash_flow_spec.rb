@@ -28,16 +28,16 @@ module StonehengeBank
           ).to eql 3_500
         end
 
-        it 'raises CashFlowCalculationError due to calculation inconsistencies' do
+        it 'raises CashFlowError due to calculation inconsistencies' do
           expect(
             net_present_value_calculator
           ).to receive(:calculate).with(
                  subject, using_equivalency: rate_equivalency
-               ).and_raise CashFlowCalculationError, 'Foo'
+               ).and_raise CashFlowError, 'Foo'
 
           expect {
             subject.net_present_value(net_present_value_calculator, with_rate_equivalency: rate_equivalency)
-          }.to raise_error(CashFlowCalculationError, 'Foo')
+          }.to raise_error(CashFlowError, 'Foo')
         end
       end
 
@@ -49,14 +49,14 @@ module StonehengeBank
           expect(subject.payback_period(payback_calculator)).to eql 3
         end
 
-        it 'raises CashFlowCalculationError due to calculation inconsistencies' do
+        it 'raises CashFlowError due to calculation inconsistencies' do
           expect(
             payback_calculator
-          ).to receive(:calculate).with(subject).and_raise CashFlowCalculationError, 'Foo'
+          ).to receive(:calculate).with(subject).and_raise CashFlowError, 'Foo'
 
           expect {
             subject.payback_period(payback_calculator)
-          }.to raise_error(CashFlowCalculationError, 'Foo')
+          }.to raise_error(CashFlowError, 'Foo')
         end
       end
     end

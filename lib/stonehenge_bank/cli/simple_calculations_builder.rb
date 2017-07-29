@@ -1,7 +1,9 @@
 module StonehengeBank
   module Cli
     class SimpleCalculationsBuilder
-      attr_reader :options, :investment, :interest_rate, :period, :equivalency
+      include EquivalencyResolvable
+
+      attr_reader :investment
 
       def initialize(options)
         @calculation_klass = Decorators::InvestmentDecorator
@@ -15,18 +17,9 @@ module StonehengeBank
         )
       end
 
-      def with_interest_rate(rate_description)
-        @interest_rate = Builders::InterestRateBuilder.new(
-          rate_description
-        ).construct_interest_rate
-      end
-
       def return_on(periodicity)
-        @period      = periodicity.delete(:period_of)
-
-        @equivalency = Calculators::InterestEquivalency.get_equivalency_for(
-          periodicity.delete(:as), interest_rate
-        ) if periodicity[:as] and interest_rate
+        @period = periodicity.delete(:period_of)
+        super
       end
 
       def future_value(verbose:)

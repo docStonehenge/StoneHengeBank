@@ -7,7 +7,7 @@ module StonehengeBank
         end - cash_flow.cost
 
       rescue UncalculableInvestmentValueError
-        raise CashFlowCalculationError,
+        raise Resources::CashFlowError,
               'An error occurred on Net Present Value calculation due to cash flow inconsistencies.'
       end
     end

@@ -32,12 +32,12 @@ module StonehengeBank
           expect(subject.calculate(cash_flow)).to be_nil
         end
 
-        it "raises CashFlowCalculationError if any cash_flow return doesn't have a future value" do
+        it "raises CashFlowError if any cash_flow return doesn't have a future value" do
           allow(investment_1).to receive(:future_value).and_return nil
 
           expect {
             subject.calculate(cash_flow)
-          }.to raise_error CashFlowCalculationError,
+          }.to raise_error Resources::CashFlowError,
                            'An error occurred on Payback calculation due to cash flow inconsistencies.'
         end
       end
