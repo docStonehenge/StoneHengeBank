@@ -82,7 +82,6 @@ module StonehengeBank
 
       describe '#future_value verbose:' do
         before do
-          subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_present_value: 2000
           subject.with_interest_rate '2.14 annually'
           subject.return_on period_of: 3, as: :year
@@ -117,7 +116,6 @@ module StonehengeBank
 
       describe '#present_value verbose:' do
         before do
-          subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_future_value: 2000
           subject.with_interest_rate '2.14 annually'
           subject.return_on period_of: 3, as: :year
@@ -150,9 +148,8 @@ module StonehengeBank
         end
       end
 
-      describe '#investment_period verbosity' do
+      describe '#investment_period verbose:' do
         before do
-          subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_present_value: 200, with_future_value: 2000
           subject.with_interest_rate '2.14 annually'
           subject.return_on as: :year
@@ -187,7 +184,6 @@ module StonehengeBank
 
       describe '#investment_rate verbose:' do
         before do
-          subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_present_value: 200, with_future_value: 2000
           subject.return_on period_of: 2
 
@@ -221,7 +217,6 @@ module StonehengeBank
 
       describe '#regular_parcel verbose:' do
         before do
-          subject.instance_variable_set(:@calculation_klass, Decorators::InvestmentDecorator)
           subject.an_investment with_present_value: 200, with_future_value: 2000
           subject.with_interest_rate '2.38 monthly'
           subject.return_on period_of: 2, as: :year
