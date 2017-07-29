@@ -72,6 +72,10 @@ module StonehengeBank
         end
       end
 
+      def options
+        super.merge(raise_errors: false)
+      end
+
       def print_result_of(calculation)
         puts calculation
       end
