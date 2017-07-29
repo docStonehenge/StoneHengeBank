@@ -1,5 +1,5 @@
 module StonehengeBank
-  module Cli
+  module DSL
     module EquivalencyResolvable
       def self.included(_klass)
         attr_reader :options, :interest_rate, :period, :equivalency

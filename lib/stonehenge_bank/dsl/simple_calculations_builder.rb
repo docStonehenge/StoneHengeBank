@@ -1,5 +1,5 @@
 module StonehengeBank
-  module Cli
+  module DSL
     class SimpleCalculationsBuilder
       include EquivalencyResolvable
 

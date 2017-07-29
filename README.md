@@ -71,12 +71,10 @@ StoneHengeBank provides an easy and clarified DSL to be used on applications tha
 
 Although it's possible to use the verbosity level with it (set `:verbose` argument to true), most cases will only need to run numeric results.
 
-(WIP) The DSL is inside Cli namespace. This will be changed, in order to avoid a namespace call that isn't corresponding to the client calling it (the client is an application, not the command-line).
-
 Future value:
 
 ```ruby
-          StonehengeBank::Cli::InterfaceDSL.simple_calculations do
+          StonehengeBank::DSL::Interface.simple_calculations do
             an_investment      with_present_value: 100.0
             with_interest_rate "3.89% monthly"
             return_on          period_of: 2, as: "year"
@@ -87,7 +85,7 @@ Future value:
 Present value:
 
 ```ruby
-          StonehengeBank::Cli::InterfaceDSL.simple_calculations do
+          StonehengeBank::DSL::Interface.simple_calculations do
             an_investment      with_future_value: 1500.0
             with_interest_rate "3.89% monthly"
             return_on          period_of: 2, as: "year"
@@ -98,7 +96,7 @@ Present value:
 Investment period:
 
 ```ruby
-          StonehengeBank::Cli::InterfaceDSL.simple_calculations do
+          StonehengeBank::DSL::Interface.simple_calculations do
             an_investment with_present_value: 100.0, with_future_value: 4780.0
             with_interest_rate "1.7% annually"
             return_on as: "year"
@@ -109,7 +107,7 @@ Investment period:
 Investment rate:
 
 ```ruby
-          StonehengeBank::Cli::InterfaceDSL.simple_calculations do
+          StonehengeBank::DSL::Interface.simple_calculations do
             an_investment with_present_value: 1200.99, with_future_value: 130_470.99
             return_on period_of: 36
             investment_rate verbose: false
@@ -119,7 +117,7 @@ Investment rate:
 Investment regular parcel:
 
 ```ruby
-          StonehengeBank::Cli::InterfaceDSL.simple_calculations do
+          StonehengeBank::DSL::Interface.simple_calculations do
             an_investment with_present_value: 159.70, with_future_value: 1300.0
             with_interest_rate "0.079% monthly"
             return_on period_of: 12, as: "month"

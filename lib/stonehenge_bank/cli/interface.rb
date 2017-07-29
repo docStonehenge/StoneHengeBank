@@ -27,7 +27,7 @@ module StonehengeBank
       define_method_options(:present_value, :future_value, :rate, :periodicity, :verbose)
       def investment_period
         print_result_of(
-          InterfaceDSL.simple_calculations(with_options: options) do
+          DSL::Interface.simple_calculations(with_options: options) do
             an_investment with_present_value: options.dig('present_value'), with_future_value: options.dig('future_value')
             with_interest_rate options.dig('rate')
             return_on as: options.dig('periodicity')
@@ -40,7 +40,7 @@ module StonehengeBank
       define_method_options(:present_value, :future_value, :period, :verbose)
       def investment_rate
         print_result_of(
-          InterfaceDSL.simple_calculations(with_options: options) do
+          DSL::Interface.simple_calculations(with_options: options) do
             an_investment with_present_value: options.dig('present_value'), with_future_value: options.dig('future_value')
             return_on period_of: options.dig('period')
             investment_rate verbose: options.dig('verbose')
@@ -52,7 +52,7 @@ module StonehengeBank
       define_method_options(:present_value, :future_value, :rate, :period, :periodicity, :verbose)
       def regular_parcel
         print_result_of(
-          InterfaceDSL.simple_calculations(with_options: options) do
+          DSL::Interface.simple_calculations(with_options: options) do
             an_investment with_present_value: options.dig('present_value'), with_future_value: options.dig('future_value')
             with_interest_rate options.dig('rate')
             return_on period_of: options.dig('period'), as: options.dig('periodicity')
@@ -64,7 +64,7 @@ module StonehengeBank
       private
 
       def build_calculation_for(calculated_value, required_value, options)
-        InterfaceDSL.simple_calculations(with_options: options) do
+        DSL::Interface.simple_calculations(with_options: options) do
           an_investment :"with_#{required_value}" => options.dig(required_value.to_s)
           with_interest_rate options.dig('rate')
           return_on period_of: options.dig('period'), as: options.dig('periodicity')

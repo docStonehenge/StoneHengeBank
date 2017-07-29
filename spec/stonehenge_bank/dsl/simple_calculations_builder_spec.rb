@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module StonehengeBank
-  module Cli
+  module DSL
     describe SimpleCalculationsBuilder do
       it_behaves_like 'a DSL equivalency resolver'
 

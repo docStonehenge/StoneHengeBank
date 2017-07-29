@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 module StonehengeBank
-  module Cli
-    describe InterfaceDSL do
+  module DSL
+    describe Interface do
       let(:investment)    { double(:investment) }
       let(:interest_rate) { double(:interest_rate) }
       let(:rate_builder)  { double(:interest_rate_builder) }
