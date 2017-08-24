@@ -9,13 +9,43 @@ module StonehengeBank
 
       subject { described_class.new(payback_return) }
 
-      before do
-        expect(cash_flow).to receive(:investments).and_return(
-                               [investment_1, investment_2, investment_3]
-                             )
+      describe '.simple' do
+        it 'returns an instance of Payback initialized with Simple return' do
+          expect(
+            PaybackReturns::Simple
+          ).to receive(:new).once.and_return payback_return
+
+          expect(
+            described_class
+          ).to receive(:new).once.with(payback_return).and_return subject
+
+          expect(described_class.simple).to eql subject
+        end
+      end
+
+      describe '.discounted equivalency' do
+        let(:equivalency) { double(:equivalency) }
+
+        it 'returns an instance of Payback initialized with Discounted return' do
+          expect(
+            PaybackReturns::Discounted
+          ).to receive(:new).once.with(equivalency).and_return payback_return
+
+          expect(
+            described_class
+          ).to receive(:new).once.with(payback_return).and_return subject
+
+          expect(described_class.discounted(equivalency)).to eql subject
+        end
       end
 
       describe '#calculate cash_flow' do
+        before do
+          expect(cash_flow).to receive(:investments).and_return(
+                                 [investment_1, investment_2, investment_3]
+                               )
+        end
+
         it 'returns the period where cash flow difference becomes zero' do
           expect(payback_return).to receive(:return_value_from).with(investment_1, 1).and_return 1_200
           expect(payback_return).to receive(:return_value_from).with(investment_2, 2).and_return 1_500

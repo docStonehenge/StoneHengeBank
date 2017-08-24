@@ -1,6 +1,14 @@
 module StonehengeBank
   module Calculators
     class Payback
+      def self.simple
+        new(PaybackReturns::Simple.new)
+      end
+
+      def self.discounted(equivalency)
+        new(PaybackReturns::Discounted.new(equivalency))
+      end
+
       def initialize(payback_return)
         @payback_return, @accumulated_cash_flow = payback_return, 0
       end
