@@ -31,7 +31,7 @@ module StonehengeBank
 
       def net_present_value
         validate_cash_flow_instance_presence!
-        raise ArgumentError, 'Interest rate equivalency is missing' unless equivalency
+        validate_equivalency_presence!
 
         cash_flow.net_present_value(
           Calculators::NetPresentValue.new, with_rate_equivalency: equivalency
@@ -43,12 +43,22 @@ module StonehengeBank
         cash_flow.payback_period(Calculators::Payback.simple)
       end
 
+      def discounted_payback
+        validate_cash_flow_instance_presence!
+        validate_equivalency_presence!
+        cash_flow.payback_period(Calculators::Payback.discounted(equivalency))
+      end
+
       private
 
       def validate_cash_flow_instance_presence!
         unless cash_flow
           raise 'Cash flow calculation was not properly built: Cash flow instance is missing.'
         end
+      end
+
+      def validate_equivalency_presence!
+        raise ArgumentError, 'Interest rate equivalency is missing' unless equivalency
       end
     end
   end

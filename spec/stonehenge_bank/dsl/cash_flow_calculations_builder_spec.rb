@@ -139,6 +139,58 @@ module StonehengeBank
           end
         end
       end
+
+      describe '#discounted_payback' do
+        let(:discounted_payback) { double(:discounted_payback) }
+
+        context 'when cash flow is set for operation' do
+          before do
+            subject.an_investment(with_initial_cost: 300_000)
+            subject.has_returns_of 3200.0, 4000, 29_397.40
+          end
+
+          it 'calls payback on cash_flow instance with discounted Payback calculator' do
+            subject.with_interest_rate '3.89% annually'
+            subject.return_on as: :year
+
+            expect(
+              Calculators::Payback
+            ).to receive(:discounted).once.with(
+                   an_instance_of(Calculators::YearInterestEquivalency)
+                 ).and_return discounted_payback
+
+            expect(
+              subject.cash_flow
+            ).to receive(:payback_period).once.with(discounted_payback).and_return 2
+
+            expect(subject.discounted_payback).to eql 2
+          end
+
+          it 'raises ArgumentError with message when just rate is set' do
+            subject.with_interest_rate '3.89% annually'
+
+            expect {
+              subject.discounted_payback
+            }.to raise_error(ArgumentError, 'Interest rate equivalency is missing')
+          end
+
+          it 'raises ArgumentError with message when just return option is set' do
+            subject.return_on as: :year
+
+            expect {
+              subject.discounted_payback
+            }.to raise_error(ArgumentError, 'Interest rate equivalency is missing')
+          end
+        end
+
+        context "when cash flow isn't set" do
+          it 'raises runtime error with proper message' do
+            expect {
+              subject.discounted_payback
+            }.to raise_error(RuntimeError, 'Cash flow calculation was not properly built: Cash flow instance is missing.')
+          end
+        end
+      end
     end
   end
 end
