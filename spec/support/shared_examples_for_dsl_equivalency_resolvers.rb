@@ -33,4 +33,18 @@ shared_examples_for 'a DSL equivalency resolver' do
       end
     end
   end
+
+  describe '#validate_equivalency_presence!' do
+    it 'halts execution when equivalency is present' do
+      expect(subject).to receive(:equivalency).and_return double
+      expect(subject.validate_equivalency_presence!).to be_nil
+    end
+
+    it 'raises EquivalencyMissingError when equivalency is not set' do
+      expect(subject).to receive(:equivalency).and_return nil
+      expect {
+        subject.validate_equivalency_presence!
+      }.to raise_error(StonehengeBank::DSL::EquivalencyMissingError)
+    end
+  end
 end

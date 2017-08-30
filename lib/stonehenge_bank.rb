@@ -29,6 +29,7 @@ require "stonehenge_bank/formatters/investment_period_message_formatter"
 require "stonehenge_bank/formatters/investment_rate_message_formatter"
 require "stonehenge_bank/formatters/regular_parcel_message_formatter"
 
+require "stonehenge_bank/dsl/equivalency_missing_error"
 require "stonehenge_bank/dsl/equivalency_resolvable"
 require "stonehenge_bank/dsl/simple_calculations_builder"
 require "stonehenge_bank/dsl/cash_flow_calculations_builder"

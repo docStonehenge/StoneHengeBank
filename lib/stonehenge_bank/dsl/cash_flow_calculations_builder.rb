@@ -56,10 +56,6 @@ module StonehengeBank
           raise 'Cash flow calculation was not properly built: Cash flow instance is missing.'
         end
       end
-
-      def validate_equivalency_presence!
-        raise ArgumentError, 'Interest rate equivalency is missing' unless equivalency
-      end
     end
   end
 end

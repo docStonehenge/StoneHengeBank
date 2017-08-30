@@ -23,6 +23,8 @@ module StonehengeBank
       end
 
       def future_value(verbose:)
+        validate_equivalency_presence!
+
         call_calculation_on_decorator_instance(
           define_method_by_verbosity(:future_value, verbose),
           equivalency, period
@@ -30,6 +32,8 @@ module StonehengeBank
       end
 
       def present_value(verbose:)
+        validate_equivalency_presence!
+
         call_calculation_on_decorator_instance(
           define_method_by_verbosity(:present_value, verbose),
           equivalency, period
@@ -37,6 +41,8 @@ module StonehengeBank
       end
 
       def investment_period(verbose:)
+        validate_equivalency_presence!
+
         call_calculation_on_decorator_instance(
           define_method_by_verbosity(:investment_period, verbose),
           equivalency
@@ -51,6 +57,8 @@ module StonehengeBank
       end
 
       def regular_parcel(verbose:)
+        validate_equivalency_presence!
+
         call_calculation_on_decorator_instance(
           define_method_by_verbosity(:regular_parcel, verbose),
           equivalency, period

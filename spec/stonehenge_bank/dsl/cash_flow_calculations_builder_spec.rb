@@ -83,20 +83,20 @@ module StonehengeBank
             expect(subject.net_present_value).to eql 10
           end
 
-          it 'raises ArgumentError with message when just rate is set' do
+          it 'raises EquivalencyMissingError with message when just rate is set' do
             subject.with_interest_rate '3.89% annually'
 
             expect {
               subject.net_present_value
-            }.to raise_error(ArgumentError, 'Interest rate equivalency is missing')
+            }.to raise_error(EquivalencyMissingError)
           end
 
-          it 'raises ArgumentError with message when just return option is set' do
+          it 'raises EquivalencyMissingError with message when just return option is set' do
             subject.return_on as: :year
 
             expect {
               subject.net_present_value
-            }.to raise_error(ArgumentError, 'Interest rate equivalency is missing')
+            }.to raise_error(EquivalencyMissingError)
           end
         end
 
@@ -166,20 +166,20 @@ module StonehengeBank
             expect(subject.discounted_payback).to eql 2
           end
 
-          it 'raises ArgumentError with message when just rate is set' do
+          it 'raises EquivalencyMissingError with message when just rate is set' do
             subject.with_interest_rate '3.89% annually'
 
             expect {
               subject.discounted_payback
-            }.to raise_error(ArgumentError, 'Interest rate equivalency is missing')
+            }.to raise_error(EquivalencyMissingError)
           end
 
-          it 'raises ArgumentError with message when just return option is set' do
+          it 'raises EquivalencyMissingError with message when just return option is set' do
             subject.return_on as: :year
 
             expect {
               subject.discounted_payback
-            }.to raise_error(ArgumentError, 'Interest rate equivalency is missing')
+            }.to raise_error(EquivalencyMissingError)
           end
         end
 

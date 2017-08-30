@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 module StonehengeBank
   module DSL
     describe SimpleCalculationsBuilder do
@@ -81,103 +79,148 @@ module StonehengeBank
       end
 
       describe '#future_value verbose:' do
-        before do
-          subject.an_investment with_present_value: 2000
-          subject.with_interest_rate '2.14 annually'
-          subject.return_on period_of: 3, as: :year
+        context 'when calculation is properly set' do
+          before do
+            subject.an_investment with_present_value: 2000
+            subject.with_interest_rate '2.14 annually'
+            subject.return_on period_of: 3, as: :year
 
-          expect(
-            Decorators::InvestmentDecorator
-          ).to receive(:new).once.with(
-                 an_instance_of(Resources::Investment)
-               ).and_return decorator
-        end
+            expect(
+              Decorators::InvestmentDecorator
+            ).to receive(:new).once.with(
+                   an_instance_of(Resources::Investment)
+                 ).and_return decorator
+          end
 
-        context 'when verbosity is false' do
-          it 'calls #calculated_future_value on decorator instance' do
-            expect(decorator).to receive(
-                                   :calculated_future_value
-                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
+          context 'when verbosity is false' do
+            it 'calls #calculated_future_value on decorator instance' do
+              expect(decorator).to receive(
+                                     :calculated_future_value
+                                   ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
 
-            subject.future_value(verbose: false)
+              subject.future_value(verbose: false)
+            end
+          end
+
+          context 'when verbosity is true' do
+            it 'calls #calculated_future_value_with_message on decorator instance' do
+              expect(decorator).to receive(
+                                     :calculated_future_value_with_message
+                                   ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
+
+              subject.future_value(verbose: true)
+            end
           end
         end
 
-        context 'when verbosity is true' do
-          it 'calls #calculated_future_value_with_message on decorator instance' do
-            expect(decorator).to receive(
-                                   :calculated_future_value_with_message
-                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
+        context 'when equivalency is missing' do
+          before do
+            subject.an_investment with_present_value: 2000
+            subject.with_interest_rate '2.14 annually'
+          end
 
-            subject.future_value(verbose: true)
+          it 'raises EquivalencyMissingError' do
+            expect {
+              subject.future_value(verbose: false)
+            }.to raise_error(EquivalencyMissingError)
           end
         end
       end
 
       describe '#present_value verbose:' do
-        before do
-          subject.an_investment with_future_value: 2000
-          subject.with_interest_rate '2.14 annually'
-          subject.return_on period_of: 3, as: :year
+        context 'when calculation is properly set' do
+          before do
+            subject.an_investment with_future_value: 2000
+            subject.with_interest_rate '2.14 annually'
+            subject.return_on period_of: 3, as: :year
 
-          expect(
-            Decorators::InvestmentDecorator
-          ).to receive(:new).once.with(
-                 an_instance_of(Resources::Investment)
-               ).and_return decorator
-        end
+            expect(
+              Decorators::InvestmentDecorator
+            ).to receive(:new).once.with(
+                   an_instance_of(Resources::Investment)
+                 ).and_return decorator
+          end
 
-        context 'when verbosity is false' do
-          it 'calls #calculated_present_value on decorator instance' do
-            expect(decorator).to receive(
-                                   :calculated_present_value
-                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
+          context 'when verbosity is false' do
+            it 'calls #calculated_present_value on decorator instance' do
+              expect(decorator).to receive(
+                                     :calculated_present_value
+                                   ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
 
-            subject.present_value(verbose: false)
+              subject.present_value(verbose: false)
+            end
+          end
+
+          context 'when verbosity is true' do
+            it 'calls #calculated_present_value_with_message on decorator instance' do
+              expect(decorator).to receive(
+                                     :calculated_present_value_with_message
+                                   ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
+
+              subject.present_value(verbose: true)
+            end
           end
         end
 
-        context 'when verbosity is true' do
-          it 'calls #calculated_present_value_with_message on decorator instance' do
-            expect(decorator).to receive(
-                                   :calculated_present_value_with_message
-                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 3)
+        context 'when equivalency is missing' do
+          before do
+            subject.an_investment with_present_value: 2000
+            subject.with_interest_rate '2.14 annually'
+          end
 
-            subject.present_value(verbose: true)
+          it 'raises EquivalencyMissingError' do
+            expect {
+              subject.present_value(verbose: false)
+            }.to raise_error(EquivalencyMissingError)
           end
         end
       end
 
       describe '#investment_period verbose:' do
-        before do
-          subject.an_investment with_present_value: 200, with_future_value: 2000
-          subject.with_interest_rate '2.14 annually'
-          subject.return_on as: :year
+        context 'when calculation is properly set' do
+          before do
+            subject.an_investment with_present_value: 200, with_future_value: 2000
+            subject.with_interest_rate '2.14 annually'
+            subject.return_on as: :year
 
-          expect(
-            Decorators::InvestmentDecorator
-          ).to receive(:new).once.with(
-                 an_instance_of(Resources::Investment)
-               ).and_return decorator
-        end
+            expect(
+              Decorators::InvestmentDecorator
+            ).to receive(:new).once.with(
+                   an_instance_of(Resources::Investment)
+                 ).and_return decorator
+          end
 
-        context 'when verbosity is false' do
-          it 'calls #calculated_investment_period on decorator instance' do
-            expect(decorator).to receive(
-                                   :calculated_investment_period
-                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency))
+          context 'when verbosity is false' do
+            it 'calls #calculated_investment_period on decorator instance' do
+              expect(decorator).to receive(
+                                     :calculated_investment_period
+                                   ).once.with(an_instance_of(Calculators::YearInterestEquivalency))
 
-            subject.investment_period(verbose: false)
+              subject.investment_period(verbose: false)
+            end
+          end
+
+          context 'when verbosity is true' do
+            it 'calls #calculated_investment_period_with_message on decorator instance' do
+              expect(decorator).to receive(
+                                     :calculated_investment_period_with_message
+                                   ).once.with(an_instance_of(Calculators::YearInterestEquivalency))
+
+              subject.investment_period(verbose: true)
+            end
           end
         end
 
-        context 'when verbosity is true' do
-          it 'calls #calculated_investment_period_with_message on decorator instance' do
-            expect(decorator).to receive(
-                                   :calculated_investment_period_with_message
-                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency))
+        context 'when equivalency is missing' do
+          before do
+            subject.an_investment with_present_value: 200, with_future_value: 2000
+            subject.with_interest_rate '2.14 annually'
+          end
 
-            subject.investment_period(verbose: true)
+          it 'raises EquivalencyMissingError' do
+            expect {
+              subject.investment_period(verbose: false)
+            }.to raise_error(EquivalencyMissingError)
           end
         end
       end
@@ -216,35 +259,50 @@ module StonehengeBank
       end
 
       describe '#regular_parcel verbose:' do
-        before do
-          subject.an_investment with_present_value: 200, with_future_value: 2000
-          subject.with_interest_rate '2.38 monthly'
-          subject.return_on period_of: 2, as: :year
+        context 'when calculation is properly set' do
+          before do
+            subject.an_investment with_present_value: 200, with_future_value: 2000
+            subject.with_interest_rate '2.38 monthly'
+            subject.return_on period_of: 2, as: :year
 
-          expect(
-            Decorators::InvestmentDecorator
-          ).to receive(:new).once.with(
-                 an_instance_of(Resources::Investment)
-               ).and_return decorator
-        end
+            expect(
+              Decorators::InvestmentDecorator
+            ).to receive(:new).once.with(
+                   an_instance_of(Resources::Investment)
+                 ).and_return decorator
+          end
 
-        context 'when verbosity is false' do
-          it 'calls #calculated_regular_parcel on decorator instance' do
-            expect(decorator).to receive(
-                                   :calculated_regular_parcel
-                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 2)
+          context 'when verbosity is false' do
+            it 'calls #calculated_regular_parcel on decorator instance' do
+              expect(decorator).to receive(
+                                     :calculated_regular_parcel
+                                   ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 2)
 
-            subject.regular_parcel(verbose: false)
+              subject.regular_parcel(verbose: false)
+            end
+          end
+
+          context 'when verbosity is true' do
+            it 'calls #calculated_regular_parcel_with_message on decorator instance' do
+              expect(decorator).to receive(
+                                     :calculated_regular_parcel_with_message
+                                   ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 2)
+
+              subject.regular_parcel(verbose: true)
+            end
           end
         end
 
-        context 'when verbosity is true' do
-          it 'calls #calculated_regular_parcel_with_message on decorator instance' do
-            expect(decorator).to receive(
-                                   :calculated_regular_parcel_with_message
-                                 ).once.with(an_instance_of(Calculators::YearInterestEquivalency), 2)
+        context 'when equivalency is missing' do
+          before do
+            subject.an_investment with_present_value: 200, with_future_value: 2000
+            subject.with_interest_rate '2.14 annually'
+          end
 
-            subject.regular_parcel(verbose: true)
+          it 'raises EquivalencyMissingError' do
+            expect {
+              subject.regular_parcel(verbose: false)
+            }.to raise_error(EquivalencyMissingError)
           end
         end
       end

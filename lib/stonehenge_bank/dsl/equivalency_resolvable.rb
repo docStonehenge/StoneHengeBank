@@ -16,6 +16,10 @@ module StonehengeBank
           periodicity.delete(:as), interest_rate
         ) if periodicity[:as] and interest_rate
       end
+
+      def validate_equivalency_presence!
+        raise EquivalencyMissingError unless equivalency
+      end
     end
   end
 end
