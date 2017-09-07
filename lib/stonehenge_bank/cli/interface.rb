@@ -61,6 +61,20 @@ module StonehengeBank
         )
       end
 
+      desc 'net_present_value', 'Calculates net present value for an investment'
+      define_method_options(:init_cost, :returns, :rate, :periodicity)
+      def net_present_value
+        print_result_of(
+          DSL::Interface.cash_flow_calculations(with_options: options) do
+            an_investment with_initial_cost: options.dig('init_cost')
+            with_interest_rate options.dig('rate')
+            has_returns_of *options.dig('returns')
+            return_on as: options.dig('periodicity')
+            net_present_value
+          end
+        )
+      end
+
       private
 
       def build_calculation_for(calculated_value, required_value, options)

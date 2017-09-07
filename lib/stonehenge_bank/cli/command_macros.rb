@@ -21,6 +21,20 @@ module StonehengeBank
         )
       end
 
+      def option_for_init_cost
+        method_option(
+          :init_cost, type: :numeric, required: true, aliases: '-c',
+          desc: banner_for_values(:floating_point)
+        )
+      end
+
+      def option_for_returns
+        method_option(
+          :returns, type: :array, required: true, aliases: '-r',
+          desc: " series of returns; each value as an#{banner_for_values(:floating_point)}"
+        )
+      end
+
       def option_for_period
         method_option(
           :period, type: :numeric, required: true,
