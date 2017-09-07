@@ -65,6 +65,13 @@ Investment regular parcel:
     # You can use abbreviated flags for this command. Check via:
     $ stonehenge_bank help regular_parcel
 
+Net present value:
+
+    $ stonehenge_bank net_present_value --init_cost=30000 --returns 20000 45000 30000 --rate '1.25% annually' --periodicity=month
+    # This command calculates net present value for an investment with initial cost of 30000, returns of 20000, 45000 and 30000 monthly, rating 1.25% annually.
+    # You can use abbreviated flags for this command. Check via:
+    $ stonehenge_bank help net_present_value
+
 ### Domain-Specific Language inside applications:
 
 StoneHengeBank provides an easy and clarified DSL to be used on applications that depend upon it.
@@ -122,6 +129,18 @@ Investment regular parcel:
             with_interest_rate "0.079% monthly"
             return_on period_of: 12, as: "month"
             regular_parcel verbose: false
+          end
+```
+
+Net present value:
+
+```ruby
+          StonehengeBank::DSL::Interface.cash_flow_calculations do
+            an_investment with_initial_cost: 450000.00
+            with_interest_rate "0.079% monthly"
+            has_returns_of 30_000.89, 550_730.82, 899_720.32
+            return_on as: :year
+            net_present_value
           end
 ```
 
