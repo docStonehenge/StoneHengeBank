@@ -72,6 +72,13 @@ Net present value:
     # You can use abbreviated flags for this command. Check via:
     $ stonehenge_bank help net_present_value
 
+Simple payback:
+
+    $ stonehenge_bank simple_payback --init_cost=30000 --returns 20000 45000 30000
+    # This command calculates simple payback for an investment with initial cost of 30000 and returns of 20000, 45000 and 30000.
+    # You can use abbreviated flags for this command. Check via:
+    $ stonehenge_bank help simple_payback
+
 ### Domain-Specific Language inside applications:
 
 StoneHengeBank provides an easy and clarified DSL to be used on applications that depend upon it.
@@ -141,6 +148,16 @@ Net present value:
             has_returns_of 30_000.89, 550_730.82, 899_720.32
             return_on as: :year
             net_present_value
+          end
+```
+
+Simple payback:
+
+```ruby
+          StonehengeBank::DSL::Interface.cash_flow_calculations do
+            an_investment with_initial_cost: 450000.00
+            has_returns_of 30_000.89, 550_730.82, 899_720.32
+            simple_payback
           end
 ```
 

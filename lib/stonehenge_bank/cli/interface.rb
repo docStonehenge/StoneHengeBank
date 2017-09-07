@@ -68,9 +68,21 @@ module StonehengeBank
           DSL::Interface.cash_flow_calculations(with_options: options) do
             an_investment with_initial_cost: options.dig('init_cost')
             with_interest_rate options.dig('rate')
-            has_returns_of *options.dig('returns')
+            has_returns_of(*options.dig('returns'))
             return_on as: options.dig('periodicity')
             net_present_value
+          end
+        )
+      end
+
+      desc 'simple_payback', 'Calculates simple payback for an investment'
+      define_method_options(:init_cost, :returns)
+      def simple_payback
+        print_result_of(
+          DSL::Interface.cash_flow_calculations(with_options: options) do
+            an_investment with_initial_cost: options.dig('init_cost')
+            has_returns_of(*options.dig('returns'))
+            simple_payback
           end
         )
       end
