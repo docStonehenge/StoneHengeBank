@@ -26,7 +26,7 @@ Or install it yourself as:
 
 ## Usage
 
-### (WIP) Command-Line Interface:
+### Command-Line Interface:
 
 To use the command-line interface, the gem provides several commands.
 
@@ -78,6 +78,13 @@ Simple payback:
     # This command calculates simple payback for an investment with initial cost of 30000 and returns of 20000, 45000 and 30000.
     # You can use abbreviated flags for this command. Check via:
     $ stonehenge_bank help simple_payback
+
+Discounted payback:
+
+    $ stonehenge_bank discounted_payback --init_cost=30000 --returns 20000 45000 30000 --rate '1.25% annually' --periodicity=month
+    # This command calculates the discounted payback for an investment with initial cost of 30000, returns of 20000, 45000 and 30000 monthly, rating 1.25% annually.
+    # You can use abbreviated flags for this command. Check via:
+    $ stonehenge_bank help discounted_payback
 
 ### Domain-Specific Language inside applications:
 
@@ -158,6 +165,18 @@ Simple payback:
             an_investment with_initial_cost: 450000.00
             has_returns_of 30_000.89, 550_730.82, 899_720.32
             simple_payback
+          end
+```
+
+Discounted payback:
+
+```ruby
+          StonehengeBank::DSL::Interface.cash_flow_calculations do
+            an_investment with_initial_cost: 450000.00
+            with_interest_rate "0.079% monthly"
+            has_returns_of 30_000.89, 550_730.82, 899_720.32
+            return_on as: :year
+            discounted_payback
           end
 ```
 
