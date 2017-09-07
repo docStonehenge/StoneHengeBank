@@ -3,6 +3,39 @@ module StonehengeBank
     describe InterestEquivalency do
       let(:interest_rate) { double(:interest_rate) }
 
+      describe '.get_equivalency_for periodicity, rate' do
+        it 'returns equivalency instance for proper periodicity' do
+          expect(
+            described_class.get_equivalency_for(:year, interest_rate)
+          ).to be_an_instance_of YearInterestEquivalency
+
+          expect(
+            described_class.get_equivalency_for(:semester, interest_rate)
+          ).to be_an_instance_of SemesterInterestEquivalency
+
+          expect(
+            described_class.get_equivalency_for(:trimester, interest_rate)
+          ).to be_an_instance_of TrimesterInterestEquivalency
+
+          expect(
+            described_class.get_equivalency_for(:month, interest_rate)
+          ).to be_an_instance_of MonthInterestEquivalency
+
+          expect(
+            described_class.get_equivalency_for(:day, interest_rate)
+          ).to be_an_instance_of DayInterestEquivalency
+        end
+
+        it 'raises custom error for invalid periodicity' do
+          expect {
+            described_class.get_equivalency_for(:foo, interest_rate)
+          }.to raise_error(
+                 InvalidInterestEquivalencyError,
+                 'An attempt was made to set equivalency with invalid value.'
+               )
+        end
+      end
+
       subject { described_class.new(interest_rate) }
 
       describe '#equivalent_rate_power' do

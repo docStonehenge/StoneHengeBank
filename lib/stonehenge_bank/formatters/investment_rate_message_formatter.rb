@@ -1,7 +1,7 @@
 module StonehengeBank
   module Formatters
     module InvestmentRateMessageFormatter
-      def calculation_with_message(period_type, period_amount)
+      def calculation_with_message(period_amount)
         @message.has_value(
           humanized_value_type(:present_value), @investment.present_value, separator: ','
         )
@@ -10,7 +10,7 @@ module StonehengeBank
           humanized_value_type(:future_value), @investment.future_value, separator: ','
         )
 
-        @message.with_period(period_type, period_amount)
+        @message.with_period(:month, period_amount)
 
         @message.with_rate(
           interest_rate_percentage_for(

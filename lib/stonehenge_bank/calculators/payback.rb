@@ -1,6 +1,14 @@
 module StonehengeBank
   module Calculators
     class Payback
+      def self.simple
+        new(PaybackReturns::Simple.new)
+      end
+
+      def self.discounted(equivalency)
+        new(PaybackReturns::Discounted.new(equivalency))
+      end
+
       def initialize(payback_return)
         @payback_return, @accumulated_cash_flow = payback_return, 0
       end
@@ -28,7 +36,7 @@ module StonehengeBank
 
       def with_cash_flow_calculation_handling_for(investment)
         if investment.future_value.nil?
-          raise CashFlowCalculationError,
+          raise Resources::CashFlowError,
                 'An error occurred on Payback calculation due to cash flow inconsistencies.'
         end
 

@@ -28,8 +28,8 @@ module StonehengeBank
       def calculated_investment_period(equivalency)
         check_investment_values!(:period)
 
-        (Math.log(future_value/present_value) /
-          Math.log(neutralized_rate_for(equivalency))).ceil
+        (Math.log(future_value.to_f/present_value.to_f) /
+         Math.log(neutralized_rate_for(equivalency))).round(2)
       end
 
       def calculated_investment_rate(period)
@@ -60,7 +60,7 @@ module StonehengeBank
       def check_investment_values!(calculation_type)
         unless present_value && future_value
           raise ::UncalculableInvestmentValueError,
-                "Cannot calculate #{calculation_type.to_s.gsub('_', ' ')} with null values."
+                "Cannot calculate #{calculation_type.to_s.tr('_', ' ')} with null values."
         end
       end
     end

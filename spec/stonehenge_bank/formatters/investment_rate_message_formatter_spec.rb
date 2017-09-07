@@ -10,7 +10,7 @@ module StonehengeBank
         ).for_type(:investment_rate)
       end
 
-      describe '#calculation_with_message equivalency, period' do
+      describe '#calculation_with_message period' do
         it 'returns investment rate calculation with a formatted message' do
           expect(investment).to receive(
                                   :calculated_investment_rate
@@ -26,7 +26,7 @@ module StonehengeBank
                               )
 
           expect(
-            subject.calculation_with_message(:month, 24)
+            subject.calculation_with_message(24)
           ).to eql 'An investment has present value of $100.0, has future value of $1000.0, on a period of 24 month(s), with an interest rate of 3.45%.'
         end
       end

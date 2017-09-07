@@ -13,14 +13,14 @@ module StonehengeBank
         if matches_real_period? method_name
           period.start_with? method_name.to_s.chomp('?')
         else
-          raise InvalidRatePeriodError, 'This is not a valid period for a rate. Valid periods are: annually, semiannually, quarterly, monthly and daily.'
+          raise InvalidRatePeriodError, 'Invalid value for interest rate. Valid periods are: annually, semiannually, quarterly, monthly and daily.'
         end
       end
 
       private
 
       def matches_real_period?(period_method)
-        period_method =~ /annual|daily|month|semiannual|quarter/
+        period_method =~ /annually|daily|monthly|semiannually|quarterly/
       end
     end
   end

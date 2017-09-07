@@ -84,7 +84,7 @@ module StonehengeBank
 
           expect(
             subject.calculated_investment_period(interest_equivalency)
-          ).to eql 23
+          ).to eql 22.74
         end
 
         it 'returns an error if present value is not set' do

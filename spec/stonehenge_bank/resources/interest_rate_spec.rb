@@ -49,8 +49,45 @@ module StonehengeBank
 
           expect { subject.foo? }.to raise_error(
                                        InterestRate::InvalidRatePeriodError,
-                                       'This is not a valid period for a rate. Valid periods are: annually, semiannually, quarterly, monthly and daily.'
+                                       'Invalid value for interest rate. Valid periods are: annually, semiannually, quarterly, monthly and daily.'
                                      )
+        end
+
+        it 'raises an exception if incomplete period is set' do
+          @period = 'month'
+
+          expect { subject.month? }.to raise_error(
+                                       InterestRate::InvalidRatePeriodError,
+                                       'Invalid value for interest rate. Valid periods are: annually, semiannually, quarterly, monthly and daily.'
+                                       )
+
+          @period = 'annual'
+
+          expect { subject.annual? }.to raise_error(
+                                          InterestRate::InvalidRatePeriodError,
+                                          'Invalid value for interest rate. Valid periods are: annually, semiannually, quarterly, monthly and daily.'
+                                        )
+
+          @period = 'day'
+
+          expect { subject.day? }.to raise_error(
+                                       InterestRate::InvalidRatePeriodError,
+                                       'Invalid value for interest rate. Valid periods are: annually, semiannually, quarterly, monthly and daily.'
+                                     )
+
+          @period = 'semiannual'
+
+          expect { subject.semiannual? }.to raise_error(
+                                              InterestRate::InvalidRatePeriodError,
+                                              'Invalid value for interest rate. Valid periods are: annually, semiannually, quarterly, monthly and daily.'
+                                            )
+
+          @period = 'quarter'
+
+          expect { subject.quarter? }.to raise_error(
+                                           InterestRate::InvalidRatePeriodError,
+                                           'Invalid value for interest rate. Valid periods are: annually, semiannually, quarterly, monthly and daily.'
+                                         )
         end
       end
     end

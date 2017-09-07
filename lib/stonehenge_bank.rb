@@ -4,13 +4,14 @@ require 'ostruct'
 
 require "stonehenge_bank/resources/interest_rate"
 require "stonehenge_bank/resources/investment"
+require "stonehenge_bank/resources/cash_flow_error"
 require "stonehenge_bank/resources/cash_flow"
 require "stonehenge_bank/resources/uncalculable_investment_value_error"
 require "stonehenge_bank/calculators/net_present_value"
 require "stonehenge_bank/calculators/payback"
 require "stonehenge_bank/calculators/payback_returns/simple"
 require "stonehenge_bank/calculators/payback_returns/discounted"
-require "stonehenge_bank/calculators/cash_flow_calculation_error"
+require "stonehenge_bank/calculators/invalid_interest_equivalency_error"
 require "stonehenge_bank/calculators/interest_equivalency"
 require "stonehenge_bank/calculators/year_interest_equivalency"
 require 'stonehenge_bank/calculators/semester_interest_equivalency'
@@ -27,6 +28,12 @@ require "stonehenge_bank/formatters/present_value_message_formatter"
 require "stonehenge_bank/formatters/investment_period_message_formatter"
 require "stonehenge_bank/formatters/investment_rate_message_formatter"
 require "stonehenge_bank/formatters/regular_parcel_message_formatter"
+
+require "stonehenge_bank/dsl/equivalency_missing_error"
+require "stonehenge_bank/dsl/equivalency_resolvable"
+require "stonehenge_bank/dsl/simple_calculations_builder"
+require "stonehenge_bank/dsl/cash_flow_calculations_builder"
+require "stonehenge_bank/dsl/interface"
 
 module StonehengeBank
 

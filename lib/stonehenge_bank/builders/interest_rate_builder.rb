@@ -6,13 +6,15 @@ module StonehengeBank
       def initialize(rate)
         @rate = rate.tr(',%', '. ').split(/\s+/)
 
-        if @rate.first.to_f.zero?
-          raise RateNotParseable, 'The string typed is not parseable.'
+        if @rate.first.to_f.zero? or @rate[1].nil?
+          raise RateNotParseable, 'Interest rate used is not parseable.'
         end
       end
 
       def construct_interest_rate
-        Resources::InterestRate.new(rate_value, @rate[1])
+        Resources::InterestRate.new(rate_value, period = @rate[1]).tap do |rate|
+          rate.public_send("#{period}?")
+        end
       end
 
       private

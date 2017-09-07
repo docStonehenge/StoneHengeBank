@@ -7,7 +7,21 @@ module StonehengeBank
         expect {
           described_class.new('foobar')
         }.to raise_error(
-               InterestRateBuilder::RateNotParseable, "The string typed is not parseable."
+               InterestRateBuilder::RateNotParseable, "Interest rate used is not parseable."
+             )
+      end
+
+      it 'raises error when period sent is nil' do
+        expect {
+          described_class.new('3.89% ')
+        }.to raise_error(
+               InterestRateBuilder::RateNotParseable, "Interest rate used is not parseable."
+             )
+
+        expect {
+          described_class.new('3.89%')
+        }.to raise_error(
+               InterestRateBuilder::RateNotParseable, "Interest rate used is not parseable."
              )
       end
 
@@ -30,6 +44,14 @@ module StonehengeBank
           expect(result).to be_an_instance_of Resources::InterestRate
           expect(result.value).to eql(0.0631)
           expect(result.period).to eql('monthly')
+        end
+
+        it 'raises error if interest rate period is not valid' do
+          subject = described_class.new('3.89 foo')
+
+          expect {
+            subject.construct_interest_rate
+          }.to raise_error(Resources::InterestRate::InvalidRatePeriodError)
         end
       end
     end

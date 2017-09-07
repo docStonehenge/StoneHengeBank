@@ -1,6 +1,17 @@
 module StonehengeBank
   module Calculators
     class InterestEquivalency
+      def self.get_equivalency_for(periodicity, rate)
+        Calculators.const_get(
+          "#{periodicity.capitalize}InterestEquivalency"
+        ).new(rate)
+      rescue NameError
+        raise(
+          InvalidInterestEquivalencyError,
+          'An attempt was made to set equivalency with invalid value.'
+        )
+      end
+
       def initialize(interest_rate)
         @interest_rate = interest_rate
       end
